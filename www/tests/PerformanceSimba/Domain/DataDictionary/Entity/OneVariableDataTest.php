@@ -1,7 +1,8 @@
 <?php
 
-namespace App\PerformanceSimba\Domain\DataDictionary\Entity;
+namespace App\Tests\PerformanceSimba\Domain\DataDictionary\Entity;
 
+use App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableData;
 use PHPUnit\Framework\TestCase;
 
 class OneVariableDataTest extends TestCase
