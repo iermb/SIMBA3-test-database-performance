@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  nginx:
+    build: 
+      context: .
+      dockerfile: infrastructure/nginx/Dockerfile
+    container_name: nginx
+    volumes:
+      - "./www:/code"
+      - "./infrastructure/nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+    ports: 
+      - "80:80"
+    env_file:
+      - ./environments/development.env
+    links:
+      - php
+      
+  php:
+    build:
+        context: .
+        dockerfile: infrastructure/php/Dockerfile
+    container_name: php-fpm
+    env_file:
+        - ./environments/development.env
+    volumes:
+        - "./www:/code"
+
+  db:
+    image: postgres:latest
+    container_name: postgresql
+    restart: always
+    env_file:
+      - ./environments/development.env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    
