@@ -39,7 +39,9 @@ class GenerateValuesForOneVariableDataUseCaseTest extends TestCase
 
     private function thenExpectsSaveOneVariableDataNumberOfVariables(): void
     {
+        $this->oneVariableDataRepository->expects($this->once())->method("clean");
         $this->oneVariableDataRepository->expects($this->exactly(28))->method("save");
+        $this->firstVariableDictionaryRepository->expects($this->once())->method("clean");
         $this->firstVariableDictionaryRepository->expects($this->exactly(28))->method("save");
     }
 
