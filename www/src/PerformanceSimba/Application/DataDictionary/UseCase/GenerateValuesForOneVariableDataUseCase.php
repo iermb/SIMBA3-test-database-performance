@@ -5,22 +5,41 @@ namespace App\PerformanceSimba\Application\DataDictionary\UseCase;
 
 
 use App\PerformanceSimba\Application\DataDictionary\Request\GenerateValuesForOneVariableDataRequest;
+use App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary;
 use App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableData;
+use App\PerformanceSimba\Domain\DataDictionary\Repository\FirstVariableDictionaryRepository;
 use App\PerformanceSimba\Domain\DataDictionary\Repository\OneVariableDataRepository;
 
 class GenerateValuesForOneVariableDataUseCase
 {
-    private OneVariableDataRepository $oneVariableDataRepository;
+    private OneVariableDataRepository         $oneVariableDataRepository;
+    private FirstVariableDictionaryRepository $firstVariableDictionaryRepository;
 
-    public function __construct(OneVariableDataRepository $oneVariableDataRepository)
-    {
+    public function __construct(
+        OneVariableDataRepository $oneVariableDataRepository,
+        FirstVariableDictionaryRepository $firstVariableDictionaryRepository
+    ) {
         $this->oneVariableDataRepository = $oneVariableDataRepository;
+        $this->firstVariableDictionaryRepository = $firstVariableDictionaryRepository;
     }
 
     public function execute(GenerateValuesForOneVariableDataRequest $request): void
     {
-        for ($i = 0; $i < $request->numberOfVariables(); $i++) {
+        $this->generateValuesForOneVariableData($request->numberOfVariables());
+        $this->generateFirstVariableDictionary($request->numberOfVariables());
+    }
+
+    private function generateValuesForOneVariableData(int $numberOfVariables): void
+    {
+        for ($i = 0; $i < $numberOfVariables; $i++) {
             $this->oneVariableDataRepository->save(new OneVariableData($i, rand() / 100));
+        }
+    }
+
+    private function generateFirstVariableDictionary(int $numberOfVariables): void
+    {
+        for ($i = 0; $i < $numberOfVariables; $i++) {
+            $this->firstVariableDictionaryRepository->save(new FirstVariableDictionary($i, "Test name " . $i));
         }
     }
 
