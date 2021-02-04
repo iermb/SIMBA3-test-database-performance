@@ -21,4 +21,9 @@ class DoctrineOneVariableDataRepository extends EntityRepository implements OneV
     {
         $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableData')->execute();
     }
+
+    public function allOneVariableData(): array
+    {
+        return $this->findAll();
+    }
 }

@@ -20,4 +20,9 @@ class DoctrineFirstVariableDictionaryRepository extends EntityRepository impleme
     {
         $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary')->execute();
     }
+
+    public function allFirstVariableDictionary(): array
+    {
+        return $this->findAll();
+    }
 }

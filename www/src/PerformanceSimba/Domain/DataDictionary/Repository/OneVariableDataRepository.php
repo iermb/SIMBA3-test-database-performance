@@ -11,4 +11,6 @@ interface OneVariableDataRepository
     public function save(OneVariableData $oneVariableData): void;
 
     public function clean(): void;
+
+    public function allOneVariableData(): array;
 }

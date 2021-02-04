@@ -11,4 +11,6 @@ interface FirstVariableDictionaryRepository
     public function save(FirstVariableDictionary $firstVariableDictionary): void;
 
     public function clean(): void;
+
+    public function allFirstVariableDictionary(): array;
 }
