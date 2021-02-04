@@ -46,7 +46,7 @@ class ReadAllOneVariableDataWithNamesResponseTest extends TestCase
     private function thenReturnValuesAsArrayWithoutOneVariableDataAndFirstVariableDictionary(): void
     {
         $this->assertEquals(["firstVariableNames" => [], "values" => []],
-            $this->readAllOneVariableDataWithNamesResponse->execute());
+            $this->readAllOneVariableDataWithNamesResponse->allOneVariableDataWithNamesAsArray());
     }
 
     /** @test */
@@ -76,7 +76,7 @@ class ReadAllOneVariableDataWithNamesResponseTest extends TestCase
             "firstVariableNames" => [["var1_id" => 1, "name" => "Test name 1"]],
             "values" => [["var1_id" => 1, "value" => 34.56]]
         ],
-            $this->readAllOneVariableDataWithNamesResponse->execute());
+            $this->readAllOneVariableDataWithNamesResponse->allOneVariableDataWithNamesAsArray());
     }
 
     /** @test */
@@ -109,7 +109,7 @@ class ReadAllOneVariableDataWithNamesResponseTest extends TestCase
             ],
             "values" => [["var1_id" => 1, "value" => 34.56], ["var1_id" => 2, "value" => 45.32]]
         ],
-            $this->readAllOneVariableDataWithNamesResponse->execute());
+            $this->readAllOneVariableDataWithNamesResponse->allOneVariableDataWithNamesAsArray());
     }
 
     protected function setUp(): void

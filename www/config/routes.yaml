@@ -8,3 +8,8 @@ api_generate_one_variable:
   methods: GET
   requirements:
     indicatorId: '\d+'
+
+api_read_all_one_variable:
+  path: /api/readOneVariable/
+  controller: App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataWithNamesController::execute
+  methods: GET

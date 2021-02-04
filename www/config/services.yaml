@@ -63,3 +63,14 @@ services:
         tags: [ controller.service_arguments ]
         arguments:
             - "@performanceSimba.useCase.generateValuesForOneVariableData"
+
+    performanceSimba.useCase.readAllOneVariableDataWithNames:
+        class: App\PerformanceSimba\Application\DataDictionary\UseCase\ReadAllOneVariableDataWithNamesUseCase
+        arguments:
+            - "@performanceSimba.repository.doctrine.oneVariableData"
+            - "@performanceSimba.repository.doctrine.firstVariableDictionary"
+
+    App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataWithNamesController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.readAllOneVariableDataWithNames"

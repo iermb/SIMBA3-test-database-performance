@@ -24,7 +24,7 @@ class ReadAllOneVariableDataWithNamesResponse
         $this->listOneVariableData = $listOneVariableData;
     }
 
-    public function execute(): array
+    public function allOneVariableDataWithNamesAsArray(): array
     {
         return [
             self::VARIABLE_NAME_FIELD => array_map(array($this, "firstVariableDictionaryAsArray"),
