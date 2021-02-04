@@ -33,7 +33,7 @@ class GenerateValuesForOneVariableDataUseCase
     {
         $this->oneVariableDataRepository->clean();
         for ($i = 0; $i < $numberOfVariables; $i++) {
-            $this->oneVariableDataRepository->save(new OneVariableData($i, rand() / 100));
+            $this->oneVariableDataRepository->save(new OneVariableData($i, rand(0, 1000000) / 100));
         }
     }
 

@@ -19,7 +19,6 @@ class DoctrineOneVariableDataRepository extends EntityRepository implements OneV
 
     public function clean(): void
     {
-        $this->getEntityManager()->createQuery('DELETE FROM :entity ;')->setParameter('entity',
-            $this->getClassName())->execute();
+        $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableData')->execute();
     }
 }

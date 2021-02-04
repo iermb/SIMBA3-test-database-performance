@@ -29,3 +29,37 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+
+    performanceSimba.repository.metadata.firstVariableDictionary:
+        class: Doctrine\ORM\Mapping\ClassMetadata
+        arguments:
+            - App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary
+
+    performanceSimba.repository.doctrine.firstVariableDictionary:
+        class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineFirstVariableDictionaryRepository
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@performanceSimba.repository.metadata.firstVariableDictionary"
+
+    performanceSimba.repository.metadata.oneVariableData:
+        class: Doctrine\ORM\Mapping\ClassMetadata
+        arguments:
+            - App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableData
+
+    performanceSimba.repository.doctrine.oneVariableData:
+        class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineOneVariableDataRepository
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@performanceSimba.repository.metadata.oneVariableData"
+
+    performanceSimba.useCase.generateValuesForOneVariableData:
+        class: App\PerformanceSimba\Application\DataDictionary\UseCase\GenerateValuesForOneVariableDataUseCase
+        arguments:
+            - "@performanceSimba.repository.doctrine.oneVariableData"
+            - "@performanceSimba.repository.doctrine.firstVariableDictionary"
+
+    App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.generateValuesForOneVariableData"

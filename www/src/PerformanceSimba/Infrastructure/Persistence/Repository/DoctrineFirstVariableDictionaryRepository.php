@@ -18,7 +18,6 @@ class DoctrineFirstVariableDictionaryRepository extends EntityRepository impleme
 
     public function clean(): void
     {
-        $this->getEntityManager()->createQuery('DELETE FROM :entity ;')->setParameter('entity',
-            $this->getClassName())->execute();
+        $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary')->execute();
     }
 }

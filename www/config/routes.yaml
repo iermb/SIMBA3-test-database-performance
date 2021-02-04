@@ -1,3 +1,10 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+api_generate_one_variable:
+  path: /api/generateOneVariable/{numVariables}/
+  controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataController::execute
+  methods: GET
+  requirements:
+    indicatorId: '\d+'
