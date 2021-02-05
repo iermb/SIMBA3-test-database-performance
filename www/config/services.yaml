@@ -74,3 +74,24 @@ services:
         tags: [ controller.service_arguments ]
         arguments:
             - "@performanceSimba.useCase.readAllOneVariableDataWithNames"
+
+    performanceSimba.repository.metadata.oneVariableDataJoined:
+        class: Doctrine\ORM\Mapping\ClassMetadata
+        arguments:
+            - App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableDataJoined
+
+    performanceSimba.repository.doctrine.oneVariableDataJoined:
+        class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineOneVariableDataJoinedRepository
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@performanceSimba.repository.metadata.oneVariableDataJoined"
+
+    performanceSimba.useCase.readAllOneVariableDataJoinedWithNames:
+        class: App\PerformanceSimba\Application\DataDictionary\UseCase\ReadAllOneVariableDataJoinedWithNamesUseCase
+        arguments:
+            - "@performanceSimba.repository.doctrine.oneVariableDataJoined"
+
+    App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataJoinedWithNamesController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.readAllOneVariableDataJoinedWithNames"

@@ -13,3 +13,8 @@ api_read_all_one_variable:
   path: /api/readOneVariable/
   controller: App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataWithNamesController::execute
   methods: GET
+
+api_read_all_one_variable_joined:
+  path: /api/readOneVariableJoined/
+  controller: App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataJoinedWithNamesController::execute
+  methods: GET
