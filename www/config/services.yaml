@@ -58,6 +58,7 @@ services:
         arguments:
             - "@performanceSimba.repository.doctrine.oneVariableData"
             - "@performanceSimba.repository.doctrine.firstVariableDictionary"
+            - '@performanceSimba.repository.doctrine.oneVariableDataJoined'
 
     App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataController:
         tags: [ controller.service_arguments ]
@@ -95,3 +96,25 @@ services:
         tags: [ controller.service_arguments ]
         arguments:
             - "@performanceSimba.useCase.readAllOneVariableDataJoinedWithNames"
+
+    performanceSimba.repository.metadata.firstVariableDictionaryJoined:
+        class: Doctrine\ORM\Mapping\ClassMetadata
+        arguments:
+            - App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionaryJoined
+
+    performanceSimba.repository.doctrine.firstVariableDictionaryJoined:
+        class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineFirstVariableDictionaryJoinedRepository
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@performanceSimba.repository.metadata.firstVariableDictionaryJoined"
+
+    performanceSimba.useCase.generateValuesForOneVariableDataJoined:
+        class: App\PerformanceSimba\Application\DataDictionary\UseCase\GenerateValuesForOneVariableDataJoinedUseCase
+        arguments:
+            - "@performanceSimba.repository.doctrine.oneVariableDataJoined"
+            - "@performanceSimba.repository.doctrine.firstVariableDictionaryJoined"
+
+    App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataJoinedController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.generateValuesForOneVariableDataJoined"

@@ -16,26 +16,21 @@ class GenerateValuesForOneVariableDataUseCase
 {
     private OneVariableDataRepository         $oneVariableDataRepository;
     private FirstVariableDictionaryRepository $firstVariableDictionaryRepository;
-    private OneVariableDataJoinedRepository   $oneVariableDataJoinedRepository;
 
     public function __construct(
         OneVariableDataRepository $oneVariableDataRepository,
-        FirstVariableDictionaryRepository $firstVariableDictionaryRepository,
-        OneVariableDataJoinedRepository $oneVariableDataJoinedRepository
+        FirstVariableDictionaryRepository $firstVariableDictionaryRepository
     ) {
         $this->oneVariableDataRepository = $oneVariableDataRepository;
         $this->firstVariableDictionaryRepository = $firstVariableDictionaryRepository;
-        $this->oneVariableDataJoinedRepository = $oneVariableDataJoinedRepository;
     }
 
     public function execute(GenerateValuesForOneVariableDataRequest $request): void
     {
         $this->oneVariableDataRepository->clean();
         $this->firstVariableDictionaryRepository->clean();
-        $this->oneVariableDataJoinedRepository->clean();
         $this->generateValuesForOneVariableData($request->numberOfVariables());
-        $listFirstVariableDictionary = $this->generateFirstVariableDictionary($request->numberOfVariables());
-        $this->generateValuesForOneVariableDataJoined($listFirstVariableDictionary);
+        $this->generateFirstVariableDictionary($request->numberOfVariables());
     }
 
     private function generateValuesForOneVariableData(int $numberOfVariables): void
@@ -45,22 +40,11 @@ class GenerateValuesForOneVariableDataUseCase
         }
     }
 
-    private function generateFirstVariableDictionary(int $numberOfVariables): array
+    private function generateFirstVariableDictionary(int $numberOfVariables): void
     {
-        $listFirstVariableDictionary = array();
         for ($i = 0; $i < $numberOfVariables; $i++) {
             $firstVariableDictionary = new FirstVariableDictionary($i, "Test name " . $i);
             $this->firstVariableDictionaryRepository->save($firstVariableDictionary);
-            $listFirstVariableDictionary[] = new FirstVariableDictionary($i, "Test name " . $i);
-        }
-        return $listFirstVariableDictionary;
-    }
-
-    private function generateValuesForOneVariableDataJoined(array $listFirstVariableDictionary): void
-    {
-        foreach ($listFirstVariableDictionary as $firstVariableDictionary) {
-            $this->oneVariableDataJoinedRepository->save(new OneVariableDataJoined($firstVariableDictionary,
-                rand(0, 1000000) / 100));
         }
     }
 

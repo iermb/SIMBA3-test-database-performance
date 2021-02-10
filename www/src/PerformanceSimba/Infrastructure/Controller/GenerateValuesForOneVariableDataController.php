@@ -17,10 +17,14 @@ class GenerateValuesForOneVariableDataController
         $this->generateValuesForOneCariableDataUseCase = $generateValuesForOneCariableDataUseCase;
     }
 
-    public function execute(int $numVariables): Response
+    public function execute(int $numberOfVariables): Response
     {
-        $this->generateValuesForOneCariableDataUseCase->execute(new GenerateValuesForOneVariableDataRequest($numVariables));
-        return new Response("Saved", Response::HTTP_OK);
+        try {
+            $this->generateValuesForOneCariableDataUseCase->execute(new GenerateValuesForOneVariableDataRequest($numberOfVariables));
+            return new Response("Saved", Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return new Response($exception->getMessage(), Response::HTTP_NOT_FOUND);
+        }
     }
 
 }

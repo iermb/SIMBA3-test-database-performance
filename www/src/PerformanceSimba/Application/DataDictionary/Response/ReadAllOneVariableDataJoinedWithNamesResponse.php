@@ -21,7 +21,7 @@ class ReadAllOneVariableDataJoinedWithNamesResponse
         $this->listOneVariableDataJoined = $listOneVariableDataJoined;
     }
 
-    public function allOneVariableDataWithNamesAsArray(): array
+    public function allOneVariableDataJoinedWithNamesAsArray(): array
     {
         return [
             self::VARIABLE_NAME_FIELD => array_map(array($this, "firstVariableDictionaryAsArray"),
@@ -34,15 +34,15 @@ class ReadAllOneVariableDataJoinedWithNamesResponse
     private function firstVariableDictionaryAsArray(OneVariableDataJoined $oneVariableDataJoined): array
     {
         return [
-            self::ID_VARIABLE_FIELD => $oneVariableDataJoined->firstVariableDictionary()->id(),
-            self::NAME_VARIABLE_FIELD => $oneVariableDataJoined->firstVariableDictionary()->name()
+            self::ID_VARIABLE_FIELD => $oneVariableDataJoined->firstVariableDictionaryJoined()->id(),
+            self::NAME_VARIABLE_FIELD => $oneVariableDataJoined->firstVariableDictionaryJoined()->name()
         ];
     }
 
     private function oneVariableDataAsArray(OneVariableDataJoined $oneVariableDataJoined): array
     {
         return [
-            self::ID_VARIABLE_FIELD => $oneVariableDataJoined->firstVariableDictionary()->id(),
+            self::ID_VARIABLE_FIELD => $oneVariableDataJoined->firstVariableDictionaryJoined()->id(),
             self::VALUE_VARIABLE_FIELD => $oneVariableDataJoined->value()
         ];
     }

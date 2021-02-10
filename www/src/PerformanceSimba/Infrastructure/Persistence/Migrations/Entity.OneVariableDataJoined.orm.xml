@@ -4,9 +4,12 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableDataJoined" table="one_variable_data_joined">
-        <id name="firstVariableDictionary" association-key="true" />
-        <many-to-one field="firstVariableDictionary"
-                     target-entity="App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary">
+        <id name="firstVariableDictionaryJoined" association-key="true" />
+        <many-to-one field="firstVariableDictionaryJoined"
+                     target-entity="App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionaryJoined">
+            <cascade>
+                <cascade-all/>
+            </cascade>
             <join-column name="variable_id" referenced-column-name="id"/>
         </many-to-one>
         <field name="value" column="value" type="decimal" scale="3" precision="10"/>

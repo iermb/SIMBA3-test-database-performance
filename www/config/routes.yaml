@@ -3,8 +3,15 @@
 #    controller: App\Controller\DefaultController::index
 
 api_generate_one_variable:
-  path: /api/generateOneVariable/{numVariables}/
+  path: /api/generateOneVariable/{numberOfVariables}/
   controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataController::execute
+  methods: GET
+  requirements:
+    indicatorId: '\d+'
+
+api_generate_one_variable_joined:
+  path: /api/generateOneVariableJoined/{numberOfVariables}/
+  controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataJoinedController::execute
   methods: GET
   requirements:
     indicatorId: '\d+'

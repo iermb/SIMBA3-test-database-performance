@@ -6,18 +6,18 @@ namespace App\PerformanceSimba\Domain\DataDictionary\Entity;
 
 class OneVariableDataJoined
 {
-    private FirstVariableDictionary $firstVariableDictionary;
-    private float $value;
+    private FirstVariableDictionaryJoined $firstVariableDictionaryJoined;
+    private float                         $value;
 
-    public function __construct(FirstVariableDictionary $firstVariableDictionary, float $value)
+    public function __construct(FirstVariableDictionaryJoined $firstVariableDictionaryJoined, float $value)
     {
-        $this->firstVariableDictionary = $firstVariableDictionary;
+        $this->firstVariableDictionaryJoined = $firstVariableDictionaryJoined;
         $this->value = $value;
     }
 
-    public function firstVariableDictionary(): FirstVariableDictionary
+    public function firstVariableDictionaryJoined(): FirstVariableDictionaryJoined
     {
-        return $this->firstVariableDictionary;
+        return $this->firstVariableDictionaryJoined;
     }
 
     public function value(): float
