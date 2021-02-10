@@ -12,7 +12,6 @@ class ReadAllOneVariableDataWithNamesResponse
     private const VARIABLE_NAME_FIELD  = "firstVariableNames";
     private const VALUES_DATA_FIELD    = "values";
     private const ID_VARIABLE_FIELD    = "var1_id";
-    private const VALUE_VARIABLE_FIELD = "value";
     private const NAME_VARIABLE_FIELD  = "name";
 
     private array $listOneVariableData;
@@ -43,10 +42,7 @@ class ReadAllOneVariableDataWithNamesResponse
 
     private function oneVariableDataAsArray(OneVariableData $oneVariableData): array
     {
-        return [
-            self::ID_VARIABLE_FIELD => $oneVariableData->variableId(),
-            self::VALUE_VARIABLE_FIELD => $oneVariableData->value()
-        ];
+        return [ $oneVariableData->variableId(), $oneVariableData->value() ];
     }
 
 }

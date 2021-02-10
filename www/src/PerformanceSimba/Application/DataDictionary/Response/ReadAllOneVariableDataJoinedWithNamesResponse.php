@@ -11,7 +11,6 @@ class ReadAllOneVariableDataJoinedWithNamesResponse
     private const VARIABLE_NAME_FIELD  = "firstVariableNames";
     private const VALUES_DATA_FIELD    = "values";
     private const ID_VARIABLE_FIELD    = "var1_id";
-    private const VALUE_VARIABLE_FIELD = "value";
     private const NAME_VARIABLE_FIELD  = "name";
 
     private array $listOneVariableDataJoined;
@@ -41,9 +40,6 @@ class ReadAllOneVariableDataJoinedWithNamesResponse
 
     private function oneVariableDataAsArray(OneVariableDataJoined $oneVariableDataJoined): array
     {
-        return [
-            self::ID_VARIABLE_FIELD => $oneVariableDataJoined->firstVariableDictionaryJoined()->id(),
-            self::VALUE_VARIABLE_FIELD => $oneVariableDataJoined->value()
-        ];
+        return [$oneVariableDataJoined->firstVariableDictionaryJoined()->id(), $oneVariableDataJoined->value()];
     }
 }
