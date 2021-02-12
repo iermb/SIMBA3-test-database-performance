@@ -1,4 +1,5 @@
 <?php
+set_time_limit(0);
 
 use App\Kernel;
 use Symfony\Component\Dotenv\Dotenv;
