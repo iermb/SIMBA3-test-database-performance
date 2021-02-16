@@ -35,17 +35,24 @@ class GenerateValuesForOneVariableDataUseCase
 
     private function generateValuesForOneVariableData(int $numberOfVariables): void
     {
+        $arrayOneVariableDataRepository = [];
+
         for ($i = 0; $i < $numberOfVariables; $i++) {
-            $this->oneVariableDataRepository->save(new OneVariableData($i, rand(0, 1000000) / 100));
+            $arrayOneVariableDataRepository[] = new OneVariableData($i, rand(0, 1000000) / 100);
         }
+
+        $this->oneVariableDataRepository->saveMultiple($arrayOneVariableDataRepository);
     }
 
     private function generateFirstVariableDictionary(int $numberOfVariables): void
     {
+        $arrayFirstVariableDictionary = [];
+
         for ($i = 0; $i < $numberOfVariables; $i++) {
-            $firstVariableDictionary = new FirstVariableDictionary($i, "Test name " . $i);
-            $this->firstVariableDictionaryRepository->save($firstVariableDictionary);
+            $arrayFirstVariableDictionary[] = new FirstVariableDictionary($i, "Test name " . $i);
         }
+
+        $this->firstVariableDictionaryRepository->saveMultiple($arrayFirstVariableDictionary);
     }
 
 }

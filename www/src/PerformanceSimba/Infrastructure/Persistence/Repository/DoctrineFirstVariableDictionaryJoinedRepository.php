@@ -18,6 +18,26 @@ class DoctrineFirstVariableDictionaryJoinedRepository extends EntityRepository i
         $this->getEntityManager()->flush();
     }
 
+    public function saveMultiple(array $arrayFirstVariableDictionaryJoined): void
+    {
+        $batchSize = 20;
+        $numElement = 0;
+
+        foreach($arrayFirstVariableDictionaryJoined as $firstVariableDictionary) {
+
+            $this->getEntityManager()->persist($firstVariableDictionary);
+            $numElement++;
+
+            if($numElement >= $batchSize) {
+                $this->getEntityManager()->flush();
+                $this->getEntityManager()->clear(FirstVariableDictionaryJoined::class);
+                $numElement = 0;
+            }
+        }
+
+        $this->getEntityManager()->flush();
+    }
+
 
     public function clean(): void
     {

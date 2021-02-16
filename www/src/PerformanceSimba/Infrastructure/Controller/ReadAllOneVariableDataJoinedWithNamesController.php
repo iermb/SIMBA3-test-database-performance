@@ -20,8 +20,18 @@ class ReadAllOneVariableDataJoinedWithNamesController
 
     public function execute(): Response
     {
+        $startTime = microtime(1);
+
         $response = $this->readAllOneVariableDataJoinedWithNamesUseCase->execute();
-        return new JsonResponse($response->allOneVariableDataJoinedWithNamesAsArray(), Response::HTTP_OK);
+
+        $duration = microtime(1) - $startTime;
+
+        $result = [
+            $response->allOneVariableDataJoinedWithNamesAsArray(),
+            'duration' => $duration
+        ];
+
+        return new JsonResponse($result, Response::HTTP_OK);
     }
 
 }

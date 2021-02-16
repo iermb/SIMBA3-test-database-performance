@@ -16,6 +16,26 @@ class DoctrineFirstVariableDictionaryRepository extends EntityRepository impleme
         $this->getEntityManager()->flush();
     }
 
+    public function saveMultiple(array $arrayFirstVariableDictionary): void
+    {
+        $batchSize = 20;
+        $numElement = 0;
+
+        foreach($arrayFirstVariableDictionary as $firstVariableDictionary) {
+
+            $this->getEntityManager()->persist($firstVariableDictionary);
+            $numElement++;
+
+            if($numElement >= $batchSize) {
+                $this->getEntityManager()->flush();
+                $this->getEntityManager()->clear(FirstVariableDictionary::class);
+                $numElement = 0;
+            }
+        }
+
+        $this->getEntityManager()->flush();
+    }
+
     public function clean(): void
     {
         $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary')->execute();

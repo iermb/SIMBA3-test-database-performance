@@ -2,19 +2,19 @@
 
 namespace App\tests\PerformanceSimba\Domain\DataDictionary\Entity;
 
-use App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary;
+use App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionaryJoined;
 use App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableDataJoined;
 use PHPUnit\Framework\TestCase;
 
 class OneVariableDataJoinedTest extends TestCase
 {
     private OneVariableDataJoined $oneVariableDataJoined;
-    private FirstVariableDictionary $firstVariableDictionary;
+    private FirstVariableDictionaryJoined $firstVariableDictionaryJoined;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->firstVariableDictionary = $this->createMock(FirstVariableDictionary::class);
+        $this->firstVariableDictionaryJoined = $this->createMock(FirstVariableDictionaryJoined::class);
     }
 
     /** @test */
@@ -26,12 +26,12 @@ class OneVariableDataJoinedTest extends TestCase
 
     private function givenAnOneVariableDataJoined(): void
     {
-        $this->oneVariableDataJoined = new OneVariableDataJoined($this->firstVariableDictionary, 34.4);
+        $this->oneVariableDataJoined = new OneVariableDataJoined($this->firstVariableDictionaryJoined, 34.4);
     }
 
     private function thenOneVariableDataJoinedReturnFirstVariableDictionaryAndValue(): void
     {
-        $this->assertSame($this->firstVariableDictionary, $this->oneVariableDataJoined->firstVariableDictionary());
+        $this->assertSame($this->firstVariableDictionaryJoined, $this->oneVariableDataJoined->firstVariableDictionaryJoined());
         $this->assertEquals(34.4, $this->oneVariableDataJoined->value());
     }
 }

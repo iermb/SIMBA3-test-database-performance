@@ -27,11 +27,23 @@ class GenerateValuesForOneVariableDataJoinedUseCase
     {
         $this->oneVariableDataJoinedRepository->clean();
         $this->firstVariableDictionaryJoinedRepository->clean();
+
+        $arrayFirstVariableDictionaryJoined = [];
+        $arrayOneVariableDataJoinedRepository = [];
+
         for ($i = 0; $i < $request->numberOfVariables(); $i++) {
+
             $firstVariableDictionaryJoined = new FirstVariableDictionaryJoined($i, "Test name " . $i);
-            $this->firstVariableDictionaryJoinedRepository->save($firstVariableDictionaryJoined);
-            $this->oneVariableDataJoinedRepository->save(new OneVariableDataJoined($firstVariableDictionaryJoined,
-                rand(0, 1000000) / 100));
+
+            $arrayFirstVariableDictionaryJoined[] = $firstVariableDictionaryJoined;
+
+            $arrayOneVariableDataJoinedRepository[] = new OneVariableDataJoined(
+                $firstVariableDictionaryJoined,
+                rand(0, 1000000) / 100
+            );
         }
+
+        $this->oneVariableDataJoinedRepository->saveMultiple($arrayOneVariableDataJoinedRepository);
+        $this->firstVariableDictionaryJoinedRepository->saveMultiple($arrayFirstVariableDictionaryJoined);
     }
 }

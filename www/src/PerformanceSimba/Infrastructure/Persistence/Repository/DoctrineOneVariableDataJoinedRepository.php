@@ -22,6 +22,26 @@ class DoctrineOneVariableDataJoinedRepository extends EntityRepository implement
         $this->getEntityManager()->flush();
     }
 
+    public function saveMultiple(array $arrayOneVariableDataJoined): void
+    {
+        $batchSize = 20;
+        $numElement = 0;
+
+        foreach($arrayOneVariableDataJoined as $oneVariableDictionary) {
+
+            $this->getEntityManager()->persist($oneVariableDictionary);
+            $numElement++;
+
+            if($numElement >= $batchSize) {
+                $this->getEntityManager()->flush();
+                $this->getEntityManager()->clear(OneVariableDataJoined::class);
+                $numElement = 0;
+            }
+        }
+
+        $this->getEntityManager()->flush();
+    }
+
     public function clean(): void
     {
         $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableDataJoined')->execute();

@@ -10,17 +10,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GenerateValuesForOneVariableDataController
 {
-    private GenerateValuesForOneVariableDataUseCase $generateValuesForOneCariableDataUseCase;
+    private GenerateValuesForOneVariableDataUseCase $generateValuesForOneVariableDataUseCase;
 
-    public function __construct(GenerateValuesForOneVariableDataUseCase $generateValuesForOneCariableDataUseCase)
+    public function __construct(GenerateValuesForOneVariableDataUseCase $generateValuesForOneVariableDataUseCase)
     {
-        $this->generateValuesForOneCariableDataUseCase = $generateValuesForOneCariableDataUseCase;
+        $this->generateValuesForOneVariableDataUseCase = $generateValuesForOneVariableDataUseCase;
     }
 
     public function execute(int $numberOfVariables): Response
     {
         try {
-            $this->generateValuesForOneCariableDataUseCase->execute(new GenerateValuesForOneVariableDataRequest($numberOfVariables));
+            $this->generateValuesForOneVariableDataUseCase->execute(new GenerateValuesForOneVariableDataRequest($numberOfVariables));
             return new Response("Saved", Response::HTTP_OK);
         } catch (\Exception $exception) {
             return new Response($exception->getMessage(), Response::HTTP_NOT_FOUND);

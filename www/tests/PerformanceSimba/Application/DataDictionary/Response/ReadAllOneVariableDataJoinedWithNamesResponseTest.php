@@ -3,7 +3,7 @@
 namespace App\tests\PerformanceSimba\Application\DataDictionary\Response;
 
 use App\PerformanceSimba\Application\DataDictionary\Response\ReadAllOneVariableDataJoinedWithNamesResponse;
-use App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary;
+use App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionaryJoined;
 use App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableDataJoined;
 use PHPUnit\Framework\TestCase;
 
@@ -13,8 +13,8 @@ class ReadAllOneVariableDataJoinedWithNamesResponseTest extends TestCase
     private array                                         $listOneVariableDataJoined;
     private OneVariableDataJoined                         $oneVariableDataJoined1;
     private OneVariableDataJoined                         $oneVariableDataJoined2;
-    private FirstVariableDictionary                       $firstVariableDictionary1;
-    private FirstVariableDictionary                       $firstVariableDictionary2;
+    private FirstVariableDictionaryJoined                 $firstVariableDictionaryJoined1;
+    private FirstVariableDictionaryJoined                 $firstVariableDictionaryJoined2;
 
     /** @test */
     public function shouldReadAllOneVariableDataJoinedWithNamesResponseWithoutOneVariableDataJoinedReturnArray(
@@ -37,8 +37,10 @@ class ReadAllOneVariableDataJoinedWithNamesResponseTest extends TestCase
 
     private function thenReturnValuesAsArrayWithoutOneVariableDataJoined(): void
     {
-        $this->assertEquals(["firstVariableNames" => [], "values" => []],
-            $this->readAllOneVariableDataJoinedWithNamesResponse->allOneVariableDataWithNamesAsArray());
+        $this->assertEquals(
+            ["firstVariableNames" => [], "values" => []],
+            $this->readAllOneVariableDataJoinedWithNamesResponse->allOneVariableDataJoinedWithNamesAsArray()
+        );
     }
 
     /** @test */
@@ -57,11 +59,14 @@ class ReadAllOneVariableDataJoinedWithNamesResponseTest extends TestCase
 
     private function thenReturnValuesAsArrayWithOneOneVariableDataJoined(): void
     {
-        $this->assertEquals([
-            "firstVariableNames" => [["var1_id" => 1, "name" => "Test name 1"]],
-            "values" => [["var1_id" => 1, "value" => 34.56]]
-        ],
-            $this->readAllOneVariableDataJoinedWithNamesResponse->allOneVariableDataWithNamesAsArray());
+        $this->assertEquals(
+            [
+                "firstVariableNames" => [
+                    ["var1_id" => 1, "name" => "Test name 1"]
+                ],
+                "values" => [[1,34.56]]
+            ],
+            $this->readAllOneVariableDataJoinedWithNamesResponse->allOneVariableDataJoinedWithNamesAsArray());
     }
 
     /** @test */
@@ -85,26 +90,26 @@ class ReadAllOneVariableDataJoinedWithNamesResponseTest extends TestCase
                 ["var1_id" => 1, "name" => "Test name 1"],
                 ["var1_id" => 2, "name" => "Test name 2"]
             ],
-            "values" => [["var1_id" => 1, "value" => 34.56], ["var1_id" => 2, "value" => 45.32]]
+            "values" => [[1, 34.56], [2,45.32]]
         ],
-            $this->readAllOneVariableDataJoinedWithNamesResponse->allOneVariableDataWithNamesAsArray());
+            $this->readAllOneVariableDataJoinedWithNamesResponse->allOneVariableDataJoinedWithNamesAsArray());
     }
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->listOneVariableDataJoined = array();
-        $this->firstVariableDictionary1 = $this->createMock(FirstVariableDictionary::class);
-        $this->firstVariableDictionary1->method("id")->willReturn(1);
-        $this->firstVariableDictionary1->method("name")->willReturn("Test name 1");
-        $this->firstVariableDictionary2 = $this->createMock(FirstVariableDictionary::class);
-        $this->firstVariableDictionary2->method("id")->willReturn(2);
-        $this->firstVariableDictionary2->method("name")->willReturn("Test name 2");
+        $this->firstVariableDictionaryJoined1 = $this->createMock(FirstVariableDictionaryJoined::class);
+        $this->firstVariableDictionaryJoined1->method("id")->willReturn(1);
+        $this->firstVariableDictionaryJoined1->method("name")->willReturn("Test name 1");
+        $this->firstVariableDictionaryJoined2 = $this->createMock(FirstVariableDictionaryJoined::class);
+        $this->firstVariableDictionaryJoined2->method("id")->willReturn(2);
+        $this->firstVariableDictionaryJoined2->method("name")->willReturn("Test name 2");
         $this->oneVariableDataJoined1 = $this->createMock(OneVariableDataJoined::class);
-        $this->oneVariableDataJoined1->method("firstVariableDictionary")->willReturn($this->firstVariableDictionary1);
+        $this->oneVariableDataJoined1->method("firstVariableDictionaryJoined")->willReturn($this->firstVariableDictionaryJoined1);
         $this->oneVariableDataJoined1->method("value")->willReturn(34.56);
         $this->oneVariableDataJoined2 = $this->createMock(OneVariableDataJoined::class);
-        $this->oneVariableDataJoined2->method("firstVariableDictionary")->willReturn($this->firstVariableDictionary2);
+        $this->oneVariableDataJoined2->method("firstVariableDictionaryJoined")->willReturn($this->firstVariableDictionaryJoined2);
         $this->oneVariableDataJoined2->method("value")->willReturn(45.32);
     }
 

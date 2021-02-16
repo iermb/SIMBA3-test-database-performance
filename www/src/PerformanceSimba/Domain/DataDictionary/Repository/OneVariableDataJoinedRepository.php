@@ -12,5 +12,7 @@ interface OneVariableDataJoinedRepository
 
     public function save(OneVariableDataJoined $oneVariableDataJoined): void;
 
+    public function saveMultiple(array $arrayOneVariableDataJoined): void;
+
     public function clean(): void;
 }

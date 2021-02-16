@@ -17,6 +17,26 @@ class DoctrineOneVariableDataRepository extends EntityRepository implements OneV
         $this->getEntityManager()->flush();
     }
 
+    public function saveMultiple(array $arrayOneVariableData): void
+    {
+        $batchSize = 20;
+        $numElement = 0;
+
+        foreach($arrayOneVariableData as $oneVariableDictionary) {
+
+            $this->getEntityManager()->persist($oneVariableDictionary);
+            $numElement++;
+
+            if($numElement >= $batchSize) {
+                $this->getEntityManager()->flush();
+                $this->getEntityManager()->clear(OneVariableData::class);
+                $numElement = 0;
+            }
+        }
+
+        $this->getEntityManager()->flush();
+    }
+
     public function clean(): void
     {
         $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableData')->execute();
