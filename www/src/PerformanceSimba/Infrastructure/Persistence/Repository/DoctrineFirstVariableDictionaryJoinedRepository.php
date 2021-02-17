@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityRepository;
 class DoctrineFirstVariableDictionaryJoinedRepository extends EntityRepository implements
     FirstVariableDictionaryJoinedRepository
 {
+    private const BATCH_SIZE = 20;
 
     public function save(FirstVariableDictionaryJoined $firstVariableDictionaryJoined): void
     {
@@ -20,27 +21,22 @@ class DoctrineFirstVariableDictionaryJoinedRepository extends EntityRepository i
 
     public function saveMultiple(array $arrayFirstVariableDictionaryJoined): void
     {
-        $batchSize = 20;
-        $numElement = 0;
-
-        foreach($arrayFirstVariableDictionaryJoined as $firstVariableDictionary) {
-
-            $this->getEntityManager()->persist($firstVariableDictionary);
-            $numElement++;
-
-            if($numElement >= $batchSize) {
-                $this->getEntityManager()->flush();
-                $this->getEntityManager()->clear(FirstVariableDictionaryJoined::class);
-                $numElement = 0;
-            }
-        }
-
-        $this->getEntityManager()->flush();
+        array_map(array($this, "saveBatch"), array_chunk($arrayFirstVariableDictionaryJoined, self::BATCH_SIZE));
     }
-
 
     public function clean(): void
     {
         $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionaryJoined')->execute();
+    }
+
+    private function saveBatch(array $arrayFirstVariablesDictionaryJoined): void
+    {
+        array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
+        $this->getEntityManager()->flush();
+    }
+
+    private function saveElement(FirstVariableDictionaryJoined $firstVariableDictionaryJoined): void
+    {
+        $this->getEntityManager()->persist($firstVariableDictionaryJoined);
     }
 }
