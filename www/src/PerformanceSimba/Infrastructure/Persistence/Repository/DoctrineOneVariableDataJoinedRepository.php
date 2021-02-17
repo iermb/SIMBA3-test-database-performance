@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 
 class DoctrineOneVariableDataJoinedRepository extends EntityRepository implements OneVariableDataJoinedRepository
 {
+    private const BATCH_SIZE = 20;
 
     public function allOneVariableDataJoined(): array
     {
@@ -24,26 +25,22 @@ class DoctrineOneVariableDataJoinedRepository extends EntityRepository implement
 
     public function saveMultiple(array $arrayOneVariableDataJoined): void
     {
-        $batchSize = 20;
-        $numElement = 0;
-
-        foreach($arrayOneVariableDataJoined as $oneVariableDictionary) {
-
-            $this->getEntityManager()->persist($oneVariableDictionary);
-            $numElement++;
-
-            if($numElement >= $batchSize) {
-                $this->getEntityManager()->flush();
-                $this->getEntityManager()->clear(OneVariableDataJoined::class);
-                $numElement = 0;
-            }
-        }
-
-        $this->getEntityManager()->flush();
+        array_map(array($this, "saveBatch"), array_chunk($arrayOneVariableDataJoined, self::BATCH_SIZE));
     }
 
     public function clean(): void
     {
         $this->getEntityManager()->createQuery('DELETE FROM App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableDataJoined')->execute();
+    }
+
+    private function saveBatch(array $arrayFirstVariablesDictionaryJoined): void
+    {
+        array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
+        $this->getEntityManager()->flush();
+    }
+
+    private function saveElement(OneVariableDataJoined $oneVariableDataJoined): void
+    {
+        $this->getEntityManager()->persist($oneVariableDataJoined);
     }
 }

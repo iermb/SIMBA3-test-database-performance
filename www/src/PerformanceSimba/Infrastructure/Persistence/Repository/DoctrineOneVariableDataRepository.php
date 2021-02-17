@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 
 class DoctrineOneVariableDataRepository extends EntityRepository implements OneVariableDataRepository
 {
+    private const BATCH_SIZE = 20;
 
     public function save(OneVariableData $oneVariableData): void
     {
@@ -19,22 +20,7 @@ class DoctrineOneVariableDataRepository extends EntityRepository implements OneV
 
     public function saveMultiple(array $arrayOneVariableData): void
     {
-        $batchSize = 20;
-        $numElement = 0;
-
-        foreach($arrayOneVariableData as $oneVariableDictionary) {
-
-            $this->getEntityManager()->persist($oneVariableDictionary);
-            $numElement++;
-
-            if($numElement >= $batchSize) {
-                $this->getEntityManager()->flush();
-                $this->getEntityManager()->clear(OneVariableData::class);
-                $numElement = 0;
-            }
-        }
-
-        $this->getEntityManager()->flush();
+        array_map(array($this, "saveBatch"), array_chunk($arrayOneVariableData, self::BATCH_SIZE));
     }
 
     public function clean(): void
@@ -45,5 +31,16 @@ class DoctrineOneVariableDataRepository extends EntityRepository implements OneV
     public function allOneVariableData(): array
     {
         return $this->findAll();
+    }
+
+    private function saveBatch(array $arrayFirstVariablesDictionaryJoined): void
+    {
+        array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
+        $this->getEntityManager()->flush();
+    }
+
+    private function saveElement(OneVariableData $oneVariableData): void
+    {
+        $this->getEntityManager()->persist($oneVariableData);
     }
 }
