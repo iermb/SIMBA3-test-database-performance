@@ -118,3 +118,9 @@ services:
         tags: [ controller.service_arguments ]
         arguments:
             - "@performanceSimba.useCase.generateValuesForOneVariableDataJoined"
+
+
+    App\PerformanceSimba\Infrastructure\Controller\EvaluateReadOneVariableDataController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.readAllOneVariableDataWithNames"

@@ -25,3 +25,8 @@ api_read_all_one_variable_joined:
   path: /api/readOneVariableJoined/
   controller: App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataJoinedWithNamesController::execute
   methods: GET
+
+api_evaluate_one_variable:
+  path: /api/evaluate/one-variable/{numberOfAttempts}/
+  controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadOneVariableDataController:execute
+  methods: GET
