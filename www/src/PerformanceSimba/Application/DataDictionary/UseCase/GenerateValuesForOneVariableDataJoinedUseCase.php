@@ -31,8 +31,6 @@ class GenerateValuesForOneVariableDataJoinedUseCase
         $arrayFirstVariableDictionaryJoined = array_map(array($this, "generateFirstVariableDictionaryJoined"),
             range(0, $request->numberOfVariables()));
 
-        $this->firstVariableDictionaryJoinedRepository->saveMultiple($arrayFirstVariableDictionaryJoined);
-
         $this->oneVariableDataJoinedRepository->saveMultiple(array_map(array($this, "generateOneVariableDataJoined"),
             $arrayFirstVariableDictionaryJoined));
     }
