@@ -7,9 +7,7 @@ namespace App\PerformanceSimba\Application\DataDictionary\UseCase;
 use App\PerformanceSimba\Application\DataDictionary\Request\GenerateValuesForOneVariableDataRequest;
 use App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary;
 use App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableData;
-use App\PerformanceSimba\Domain\DataDictionary\Entity\OneVariableDataJoined;
 use App\PerformanceSimba\Domain\DataDictionary\Repository\FirstVariableDictionaryRepository;
-use App\PerformanceSimba\Domain\DataDictionary\Repository\OneVariableDataJoinedRepository;
 use App\PerformanceSimba\Domain\DataDictionary\Repository\OneVariableDataRepository;
 
 class GenerateValuesForOneVariableDataUseCase
@@ -30,22 +28,29 @@ class GenerateValuesForOneVariableDataUseCase
         $this->oneVariableDataRepository->clean();
         $this->firstVariableDictionaryRepository->clean();
         $this->generateValuesForOneVariableData($request->numberOfVariables());
-        $this->generateFirstVariableDictionary($request->numberOfVariables());
+        $this->generateFirstVariableDictionaries($request->numberOfVariables());
     }
 
     private function generateValuesForOneVariableData(int $numberOfVariables): void
     {
-        for ($i = 0; $i < $numberOfVariables; $i++) {
-            $this->oneVariableDataRepository->save(new OneVariableData($i, rand(0, 1000000) / 100));
-        }
+        $this->oneVariableDataRepository->saveMultiple(array_map(array($this, "generateOneVariableData"),
+            range(0, $numberOfVariables)));
     }
 
-    private function generateFirstVariableDictionary(int $numberOfVariables): void
+    private function generateFirstVariableDictionaries(int $numberOfVariables): void
     {
-        for ($i = 0; $i < $numberOfVariables; $i++) {
-            $firstVariableDictionary = new FirstVariableDictionary($i, "Test name " . $i);
-            $this->firstVariableDictionaryRepository->save($firstVariableDictionary);
-        }
+        $this->firstVariableDictionaryRepository->saveMultiple(array_map(array($this, "generateFirstVariableDictionary"),
+            range(0, $numberOfVariables)));
+    }
+
+    private function generateFirstVariableDictionary(int $id): FirstVariableDictionary
+    {
+        return new FirstVariableDictionary($id, "Test name " . $id);
+    }
+
+    private function generateOneVariableData(int $id): OneVariableData
+    {
+        return new OneVariableData($id, rand(0, 1000000) / 100);
     }
 
 }

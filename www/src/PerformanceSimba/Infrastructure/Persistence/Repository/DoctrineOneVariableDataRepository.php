@@ -10,11 +10,17 @@ use Doctrine\ORM\EntityRepository;
 
 class DoctrineOneVariableDataRepository extends EntityRepository implements OneVariableDataRepository
 {
+    private const BATCH_SIZE = 20;
 
     public function save(OneVariableData $oneVariableData): void
     {
         $this->getEntityManager()->persist($oneVariableData);
         $this->getEntityManager()->flush();
+    }
+
+    public function saveMultiple(array $arrayOneVariableData): void
+    {
+        array_map(array($this, "saveBatch"), array_chunk($arrayOneVariableData, self::BATCH_SIZE));
     }
 
     public function clean(): void
@@ -25,5 +31,16 @@ class DoctrineOneVariableDataRepository extends EntityRepository implements OneV
     public function allOneVariableData(): array
     {
         return $this->findAll();
+    }
+
+    private function saveBatch(array $arrayFirstVariablesDictionaryJoined): void
+    {
+        array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
+        $this->getEntityManager()->flush();
+    }
+
+    private function saveElement(OneVariableData $oneVariableData): void
+    {
+        $this->getEntityManager()->persist($oneVariableData);
     }
 }

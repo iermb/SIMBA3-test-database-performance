@@ -74,7 +74,7 @@ class ReadAllOneVariableDataWithNamesResponseTest extends TestCase
     {
         $this->assertEquals([
             "firstVariableNames" => [["var1_id" => 1, "name" => "Test name 1"]],
-            "values" => [["var1_id" => 1, "value" => 34.56]]
+            "values" => [[1, 34.56]]
         ],
             $this->readAllOneVariableDataWithNamesResponse->allOneVariableDataWithNamesAsArray());
     }
@@ -107,7 +107,7 @@ class ReadAllOneVariableDataWithNamesResponseTest extends TestCase
                 ["var1_id" => 1, "name" => "Test name 1"],
                 ["var1_id" => 2, "name" => "Test name 2"]
             ],
-            "values" => [["var1_id" => 1, "value" => 34.56], ["var1_id" => 2, "value" => 45.32]]
+            "values" => [[1, 34.56], [2, 45.32]]
         ],
             $this->readAllOneVariableDataWithNamesResponse->allOneVariableDataWithNamesAsArray());
     }
