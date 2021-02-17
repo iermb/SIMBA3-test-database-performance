@@ -30,3 +30,8 @@ api_evaluate_one_variable:
   path: /api/evaluate/one-variable/{numberOfAttempts}/
   controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadOneVariableDataController:execute
   methods: GET
+
+api_evaluate_one_variabl_joined:
+  path: /api/evaluate/one-variable-joined/{numberOfAttempts}/
+  controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadOneVariableDataJoinedController:execute
+  methods: GET
