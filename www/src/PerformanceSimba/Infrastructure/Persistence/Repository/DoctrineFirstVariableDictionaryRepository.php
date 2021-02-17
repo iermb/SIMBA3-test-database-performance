@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityRepository;
 
 class DoctrineFirstVariableDictionaryRepository extends EntityRepository implements FirstVariableDictionaryRepository
 {
+    private const BATCH_SIZE = 20;
+
     public function save(FirstVariableDictionary $firstVariableDictionary): void
     {
         $this->getEntityManager()->persist($firstVariableDictionary);
@@ -18,22 +20,7 @@ class DoctrineFirstVariableDictionaryRepository extends EntityRepository impleme
 
     public function saveMultiple(array $arrayFirstVariableDictionary): void
     {
-        $batchSize = 20;
-        $numElement = 0;
-
-        foreach($arrayFirstVariableDictionary as $firstVariableDictionary) {
-
-            $this->getEntityManager()->persist($firstVariableDictionary);
-            $numElement++;
-
-            if($numElement >= $batchSize) {
-                $this->getEntityManager()->flush();
-                $this->getEntityManager()->clear(FirstVariableDictionary::class);
-                $numElement = 0;
-            }
-        }
-
-        $this->getEntityManager()->flush();
+        array_map(array($this, "saveBatch"), array_chunk($arrayFirstVariableDictionary, self::BATCH_SIZE));
     }
 
     public function clean(): void
@@ -44,5 +31,16 @@ class DoctrineFirstVariableDictionaryRepository extends EntityRepository impleme
     public function allFirstVariableDictionary(): array
     {
         return $this->findAll();
+    }
+
+    private function saveBatch(array $arrayFirstVariablesDictionaryJoined): void
+    {
+        array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
+        $this->getEntityManager()->flush();
+    }
+
+    private function saveElement(FirstVariableDictionary $firstVariableDictionary): void
+    {
+        $this->getEntityManager()->persist($firstVariableDictionary);
     }
 }
