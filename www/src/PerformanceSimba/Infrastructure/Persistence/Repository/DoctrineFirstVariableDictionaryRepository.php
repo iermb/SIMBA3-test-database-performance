@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
 
 class DoctrineFirstVariableDictionaryRepository extends EntityRepository implements FirstVariableDictionaryRepository
 {
-    private const BATCH_SIZE = 20;
+    private const BATCH_SIZE = 200;
 
     public function save(FirstVariableDictionary $firstVariableDictionary): void
     {
@@ -37,6 +37,7 @@ class DoctrineFirstVariableDictionaryRepository extends EntityRepository impleme
     {
         array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
         $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
     }
 
     private function saveElement(FirstVariableDictionary $firstVariableDictionary): void

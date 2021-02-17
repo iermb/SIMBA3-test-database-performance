@@ -37,6 +37,7 @@ class DoctrineOneVariableDataJoinedRepository extends EntityRepository implement
     {
         array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
         $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
     }
 
     private function saveElement(OneVariableDataJoined $oneVariableDataJoined): void

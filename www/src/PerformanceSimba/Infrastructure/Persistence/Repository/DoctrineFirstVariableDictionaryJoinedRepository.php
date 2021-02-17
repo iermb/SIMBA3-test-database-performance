@@ -33,6 +33,7 @@ class DoctrineFirstVariableDictionaryJoinedRepository extends EntityRepository i
     {
         array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
         $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
     }
 
     private function saveElement(FirstVariableDictionaryJoined $firstVariableDictionaryJoined): void
