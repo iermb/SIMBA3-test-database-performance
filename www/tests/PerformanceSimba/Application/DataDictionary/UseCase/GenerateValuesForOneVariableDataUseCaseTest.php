@@ -5,7 +5,6 @@ namespace App\tests\PerformanceSimba\Application\DataDictionary\UseCase;
 use App\PerformanceSimba\Application\DataDictionary\Request\GenerateValuesForOneVariableDataRequest;
 use App\PerformanceSimba\Application\DataDictionary\UseCase\GenerateValuesForOneVariableDataUseCase;
 use App\PerformanceSimba\Domain\DataDictionary\Repository\FirstVariableDictionaryRepository;
-use App\PerformanceSimba\Domain\DataDictionary\Repository\OneVariableDataJoinedRepository;
 use App\PerformanceSimba\Domain\DataDictionary\Repository\OneVariableDataRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -41,10 +40,8 @@ class GenerateValuesForOneVariableDataUseCaseTest extends TestCase
     private function thenExpectsSaveOneVariableDataNumberOfVariables(): void
     {
         $this->oneVariableDataRepository->expects($this->once())->method("clean");
-        //$this->oneVariableDataRepository->expects($this->exactly(28))->method("save");
         $this->oneVariableDataRepository->expects($this->once())->method("saveMultiple");
         $this->firstVariableDictionaryRepository->expects($this->once())->method("clean");
-        //$this->firstVariableDictionaryRepository->expects($this->exactly(28))->method("save");
         $this->firstVariableDictionaryRepository->expects($this->once())->method("saveMultiple");
     }
 

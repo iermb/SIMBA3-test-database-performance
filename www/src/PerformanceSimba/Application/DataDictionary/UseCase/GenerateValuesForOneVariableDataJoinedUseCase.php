@@ -28,22 +28,22 @@ class GenerateValuesForOneVariableDataJoinedUseCase
         $this->oneVariableDataJoinedRepository->clean();
         $this->firstVariableDictionaryJoinedRepository->clean();
 
-        $arrayFirstVariableDictionaryJoined = [];
-        $arrayOneVariableDataJoinedRepository = [];
+        $arrayFirstVariableDictionaryJoined = array_map(array($this, "generateFirstVariableDictionaryJoined"),
+            range(0, $request->numberOfVariables()));
 
-        for ($i = 0; $i < $request->numberOfVariables(); $i++) {
-
-            $firstVariableDictionaryJoined = new FirstVariableDictionaryJoined($i, "Test name " . $i);
-
-            $arrayFirstVariableDictionaryJoined[] = $firstVariableDictionaryJoined;
-
-            $arrayOneVariableDataJoinedRepository[] = new OneVariableDataJoined(
-                $firstVariableDictionaryJoined,
-                rand(0, 1000000) / 100
-            );
-        }
-
-        $this->oneVariableDataJoinedRepository->saveMultiple($arrayOneVariableDataJoinedRepository);
         $this->firstVariableDictionaryJoinedRepository->saveMultiple($arrayFirstVariableDictionaryJoined);
+
+        $this->oneVariableDataJoinedRepository->saveMultiple(array_map(array($this, "generateOneVariableDataJoined"),
+            $arrayFirstVariableDictionaryJoined));
+    }
+
+    private function generateFirstVariableDictionaryJoined(int $id): FirstVariableDictionaryJoined
+    {
+        return new FirstVariableDictionaryJoined($id, "Test name " . $id);
+    }
+
+    private function generateOneVariableDataJoined(FirstVariableDictionaryJoined $firstVariableDictionaryJoined
+    ): OneVariableDataJoined {
+        return new OneVariableDataJoined($firstVariableDictionaryJoined, rand(0, 1000000) / 100);
     }
 }
