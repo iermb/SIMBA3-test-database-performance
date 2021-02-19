@@ -24,19 +24,18 @@ class ReadThreeVariableDataJoinedByIdWithNamesController
         $this->readThreeVariableDataJoinedByIdWithNamesUseCase = $readThreeVariableDataJoinedByIdWithNamesUseCase;
     }
 
-    public function execute(Request $request): Response
+    public function execute(string $jsonRequest): Response
     {
+        $dataRequest = json_decode($jsonRequest, true);
+
+        $varsFirst = isset($dataRequest[self::FIELD_HEADER_VARS_1]) ? $dataRequest[self::FIELD_HEADER_VARS_1] : '';
+        $varsSecond = isset($dataRequest[self::FIELD_HEADER_VARS_2]) ? $dataRequest[self::FIELD_HEADER_VARS_2] : '';
+        $varsThird = isset($dataRequest[self::FIELD_HEADER_VARS_3]) ? $dataRequest[self::FIELD_HEADER_VARS_3] : '';
+
         $startTime = microtime(1);
 
         $response = $this->readThreeVariableDataJoinedByIdWithNamesUseCase->execute(
-            new ReadThreeVariableDataJoinedByIdRequest(
-                /*
-                 * Values should be parsed from url, instead of headers, being a get request
-                 * */
-                '101',/*$request->headers->get(self::FIELD_HEADER_VARS_1),*/
-               '101',/* $request->headers->get(self::FIELD_HEADER_VARS_2),*/
-                '101'/*$request->headers->get(self::FIELD_HEADER_VARS_3)*/
-            )
+            new ReadThreeVariableDataJoinedByIdRequest( $varsFirst, $varsSecond, $varsThird)
         );
 
         $duration = microtime(1) - $startTime;

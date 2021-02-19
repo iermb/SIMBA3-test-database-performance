@@ -35,7 +35,7 @@ api_read_all_one_variable_joined:
   methods: GET
 
 api_read_three_variable_joined_by_id:
-  path: /api/readThreeVariableJoinedById/
+  path: /api/readThreeVariableJoinedById/{jsonRequest}
   controller: App\PerformanceSimba\Infrastructure\Controller\ReadThreeVariableDataJoinedByIdWithNamesController::execute
   methods: GET
 
