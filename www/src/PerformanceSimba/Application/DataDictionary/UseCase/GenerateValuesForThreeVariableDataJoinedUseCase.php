@@ -41,7 +41,7 @@ class GenerateValuesForThreeVariableDataJoinedUseCase
         //$this->thirdVariableDictionaryJoinedRepository->clean();
 
         $startNumberVar = $request->offsetVariable();
-        $endNumberVar = $startNumberVar + $request->numberOfVariables();
+        $endNumberVar = $startNumberVar + $request->numberOfVariables() - 1;
 
         $arrayFirstVariableDictionaryJoined = array_map(array($this, "generateFirstVariableDictionaryJoined"),
             range($startNumberVar, $endNumberVar));

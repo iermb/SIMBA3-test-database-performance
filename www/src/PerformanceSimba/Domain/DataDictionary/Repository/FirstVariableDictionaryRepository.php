@@ -8,6 +8,8 @@ use App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary;
 
 interface FirstVariableDictionaryRepository
 {
+    public function firstVariableDictionaryByIds(array $ids): array;
+
     public function save(FirstVariableDictionary $firstVariableDictionary): void;
 
     public function saveMultiple(array $arrayFirstVariableDictionary): void;

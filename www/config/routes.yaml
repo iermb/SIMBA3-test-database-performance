@@ -24,6 +24,14 @@ api_generate_three_variable_joined:
     offsetVariable: '\d+'
     numberOfVariables: '\d+'
 
+api_generate_three_variable:
+  path: /api/generateThreeVariable/{offsetVariable}/{numberOfVariables}/
+  controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForThreeVariableDataController::execute
+  methods: GET
+  requirements:
+    offsetVariable: '\d+'
+    numberOfVariables: '\d+'
+
 api_read_all_one_variable:
   path: /api/readOneVariable/
   controller: App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataWithNamesController::execute
@@ -37,6 +45,11 @@ api_read_all_one_variable_joined:
 api_read_three_variable_joined_by_id:
   path: /api/readThreeVariableJoinedById/{jsonRequest}
   controller: App\PerformanceSimba\Infrastructure\Controller\ReadThreeVariableDataJoinedByIdWithNamesController::execute
+  methods: GET
+
+api_read_three_variable_by_id:
+  path: /api/readThreeVariableById/{jsonRequest}
+  controller: App\PerformanceSimba\Infrastructure\Controller\ReadThreeVariableDataByIdWithNamesController::execute
   methods: GET
 
 api_evaluate_one_variable:

@@ -36,11 +36,33 @@ services:
         arguments:
             - App\PerformanceSimba\Domain\DataDictionary\Entity\FirstVariableDictionary
 
+    performanceSimba.repository.metadata.secondVariableDictionary:
+        class: Doctrine\ORM\Mapping\ClassMetadata
+        arguments:
+            - App\PerformanceSimba\Domain\DataDictionary\Entity\SecondVariableDictionary
+
+    performanceSimba.repository.metadata.thirdVariableDictionary:
+        class: Doctrine\ORM\Mapping\ClassMetadata
+        arguments:
+            - App\PerformanceSimba\Domain\DataDictionary\Entity\ThirdVariableDictionary
+
     performanceSimba.repository.doctrine.firstVariableDictionary:
         class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineFirstVariableDictionaryRepository
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@performanceSimba.repository.metadata.firstVariableDictionary"
+
+    performanceSimba.repository.doctrine.secondVariableDictionary:
+        class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineSecondVariableDictionaryRepository
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@performanceSimba.repository.metadata.secondVariableDictionary"
+
+    performanceSimba.repository.doctrine.thirdVariableDictionary:
+        class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineThirdVariableDictionaryRepository
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@performanceSimba.repository.metadata.thirdVariableDictionary"
 
     performanceSimba.repository.metadata.oneVariableData:
         class: Doctrine\ORM\Mapping\ClassMetadata
@@ -85,6 +107,11 @@ services:
         arguments:
             - App\PerformanceSimba\Domain\DataDictionary\Entity\ThreeVariableDataJoined
 
+    performanceSimba.repository.metadata.threeVariableData:
+        class: Doctrine\ORM\Mapping\ClassMetadata
+        arguments:
+            - App\PerformanceSimba\Domain\DataDictionary\Entity\ThreeVariableData
+
     performanceSimba.repository.doctrine.oneVariableDataJoined:
         class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineOneVariableDataJoinedRepository
         arguments:
@@ -97,6 +124,12 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@performanceSimba.repository.metadata.threeVariableDataJoined"
 
+    performanceSimba.repository.doctrine.threeVariableData:
+        class: App\PerformanceSimba\Infrastructure\Persistence\Repository\DoctrineThreeVariableDataRepository
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@performanceSimba.repository.metadata.threeVariableData"
+
     performanceSimba.useCase.readAllOneVariableDataJoinedWithNames:
         class: App\PerformanceSimba\Application\DataDictionary\UseCase\ReadAllOneVariableDataJoinedWithNamesUseCase
         arguments:
@@ -107,6 +140,14 @@ services:
         arguments:
             - "@performanceSimba.repository.doctrine.threeVariableDataJoined"
 
+    performanceSimba.useCase.readThreeVariableDataByIdWithNames:
+        class: App\PerformanceSimba\Application\DataDictionary\UseCase\ReadThreeVariableDataByIdWithNamesUseCase
+        arguments:
+            - "@performanceSimba.repository.doctrine.threeVariableData"
+            - "@performanceSimba.repository.doctrine.firstVariableDictionary"
+            - "@performanceSimba.repository.doctrine.secondVariableDictionary"
+            - "@performanceSimba.repository.doctrine.thirdVariableDictionary"
+
     App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataJoinedWithNamesController:
         tags: [ controller.service_arguments ]
         arguments:
@@ -116,6 +157,11 @@ services:
         tags: [ controller.service_arguments ]
         arguments:
             - "@performanceSimba.useCase.readThreeVariableDataJoinedByIdWithNames"
+
+    App\PerformanceSimba\Infrastructure\Controller\ReadThreeVariableDataByIdWithNamesController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.readThreeVariableDataByIdWithNames"
 
     performanceSimba.repository.metadata.firstVariableDictionaryJoined:
         class: Doctrine\ORM\Mapping\ClassMetadata
@@ -164,6 +210,14 @@ services:
             - "@performanceSimba.repository.doctrine.secondVariableDictionaryJoined"
             - "@performanceSimba.repository.doctrine.thirdVariableDictionaryJoined"
 
+    performanceSimba.useCase.generateValuesForThreeVariableData:
+        class: App\PerformanceSimba\Application\DataDictionary\UseCase\GenerateValuesForThreeVariableDataUseCase
+        arguments:
+            - "@performanceSimba.repository.doctrine.threeVariableData"
+            - "@performanceSimba.repository.doctrine.firstVariableDictionary"
+            - "@performanceSimba.repository.doctrine.secondVariableDictionary"
+            - "@performanceSimba.repository.doctrine.thirdVariableDictionary"
+
     App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataJoinedController:
         tags: [ controller.service_arguments ]
         arguments:
@@ -174,6 +228,10 @@ services:
         arguments:
             - "@performanceSimba.useCase.generateValuesForThreeVariableDataJoined"
 
+    App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForThreeVariableDataController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.generateValuesForThreeVariableData"
 
     App\PerformanceSimba\Infrastructure\Controller\EvaluateReadOneVariableDataController:
         tags: [ controller.service_arguments ]
