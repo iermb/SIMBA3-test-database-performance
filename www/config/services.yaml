@@ -177,6 +177,16 @@ services:
         arguments:
             - "@performanceSimba.useCase.readThreeVariableDataByIdWithNames"
 
+    App\PerformanceSimba\Infrastructure\Controller\EvaluateReadThreeVariableDataByIdController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.readThreeVariableDataByIdWithNames"
+
+    App\PerformanceSimba\Infrastructure\Controller\EvaluateReadThreeVariableDataJoinedByIdController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.readThreeVariableDataJoinedByIdWithNames"
+
     App\PerformanceSimba\Infrastructure\Controller\EmptyDatabaseController:
         tags: [ controller.service_arguments ]
         arguments:

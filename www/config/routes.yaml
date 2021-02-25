@@ -59,6 +59,26 @@ api_evaluate_one_variable:
   requirements:
     numberOfAttempts: '\d+'
 
+api_evaluate_three_variable_by_id:
+  path: /api/evaluate/three-variable/{numberOfAttempts}/{numberOfRegisters}/{idMinimum}/{idMaximum}
+  controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadThreeVariableDataByIdController:execute
+  methods: GET
+  requirements:
+    numberOfAttempts: '\d+'
+    numberOfRegisters: '\d+'
+    idMinimum: '\d+'
+    idMaximum: '\d+'
+
+api_evaluate_three_variable_joined_by_id:
+  path: /api/evaluate/three-variable-joined/{numberOfAttempts}/{numberOfRegisters}/{idMinimum}/{idMaximum}
+  controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadThreeVariableDataJoinedByIdController:execute
+  methods: GET
+  requirements:
+    numberOfAttempts: '\d+'
+    numberOfRegisters: '\d+'
+    idMinimum: '\d+'
+    idMaximum: '\d+'
+
 api_evaluate_one_variabl_joined:
   path: /api/evaluate/one-variable-joined/{numberOfAttempts}/
   controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadOneVariableDataJoinedController:execute

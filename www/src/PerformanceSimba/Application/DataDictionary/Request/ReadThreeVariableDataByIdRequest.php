@@ -14,7 +14,7 @@ class ReadThreeVariableDataByIdRequest
     private const FIELD_HEADER_VARS_2 = 'ids_2';
     private const FIELD_HEADER_VARS_3 = 'ids_3';
 
-    public function __construct(array $idsRequest )
+    public function __construct(array $idsRequest)
     {
         $this->ids1 = self::parseAssociativeArray($idsRequest, self::FIELD_HEADER_VARS_1);
         $this->ids2 = self::parseAssociativeArray($idsRequest, self::FIELD_HEADER_VARS_2);
