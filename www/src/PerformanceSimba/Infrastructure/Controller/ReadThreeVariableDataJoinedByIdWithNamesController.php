@@ -28,14 +28,10 @@ class ReadThreeVariableDataJoinedByIdWithNamesController
     {
         $dataRequest = json_decode($jsonRequest, true);
 
-        $varsFirst = isset($dataRequest[self::FIELD_HEADER_VARS_1]) ? $dataRequest[self::FIELD_HEADER_VARS_1] : '';
-        $varsSecond = isset($dataRequest[self::FIELD_HEADER_VARS_2]) ? $dataRequest[self::FIELD_HEADER_VARS_2] : '';
-        $varsThird = isset($dataRequest[self::FIELD_HEADER_VARS_3]) ? $dataRequest[self::FIELD_HEADER_VARS_3] : '';
-
         $startTime = microtime(1);
 
         $response = $this->readThreeVariableDataJoinedByIdWithNamesUseCase->execute(
-            new ReadThreeVariableDataJoinedByIdRequest( $varsFirst, $varsSecond, $varsThird)
+            new ReadThreeVariableDataJoinedByIdRequest( $dataRequest )
         );
 
         $duration = microtime(1) - $startTime;

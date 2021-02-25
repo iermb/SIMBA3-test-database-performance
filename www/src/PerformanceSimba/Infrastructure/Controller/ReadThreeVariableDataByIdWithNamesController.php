@@ -12,10 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ReadThreeVariableDataByIdWithNamesController
 {
-    private const FIELD_HEADER_VARS_1 = 'ids_1';
-    private const FIELD_HEADER_VARS_2 = 'ids_2';
-    private const FIELD_HEADER_VARS_3 = 'ids_3';
-
     private ReadThreeVariableDataByIdWithNamesUseCase $readThreeVariableDataByIdWithNamesUseCase;
 
     public function __construct(
@@ -28,14 +24,10 @@ class ReadThreeVariableDataByIdWithNamesController
     {
         $dataRequest = json_decode($jsonRequest, true);
 
-        $varsFirst = isset($dataRequest[self::FIELD_HEADER_VARS_1]) ? $dataRequest[self::FIELD_HEADER_VARS_1] : '';
-        $varsSecond = isset($dataRequest[self::FIELD_HEADER_VARS_2]) ? $dataRequest[self::FIELD_HEADER_VARS_2] : '';
-        $varsThird = isset($dataRequest[self::FIELD_HEADER_VARS_3]) ? $dataRequest[self::FIELD_HEADER_VARS_3] : '';
-
         $startTime = microtime(1);
 
         $response = $this->readThreeVariableDataByIdWithNamesUseCase->execute(
-            new ReadThreeVariableDataByIdRequest( $varsFirst, $varsSecond, $varsThird)
+            new ReadThreeVariableDataByIdRequest( $dataRequest )
         );
 
         $duration = microtime(1) - $startTime;

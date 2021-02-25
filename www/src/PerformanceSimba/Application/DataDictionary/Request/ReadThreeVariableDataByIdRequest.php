@@ -10,11 +10,27 @@ class ReadThreeVariableDataByIdRequest
     private array $ids2;
     private array $ids3;
 
-    public function __construct(string $chainIds1, string $chainIds2, string $chainIds3)
+    private const FIELD_HEADER_VARS_1 = 'ids_1';
+    private const FIELD_HEADER_VARS_2 = 'ids_2';
+    private const FIELD_HEADER_VARS_3 = 'ids_3';
+
+    public function __construct(array $idsRequest )
     {
-        $this->ids1 = self::parseChainIds($chainIds1);
-        $this->ids2 = self::parseChainIds($chainIds2);
-        $this->ids3 = self::parseChainIds($chainIds3);
+        $this->ids1 = self::parseAssociativeArray($idsRequest, self::FIELD_HEADER_VARS_1);
+        $this->ids2 = self::parseAssociativeArray($idsRequest, self::FIELD_HEADER_VARS_2);
+        $this->ids3 = self::parseAssociativeArray($idsRequest, self::FIELD_HEADER_VARS_3);
+    }
+
+    private static function parseAssociativeArray(array $input, string $key): array {
+        if (!isset($input[$key])) {
+            return [];
+        }
+
+        if (!is_array($input[$key])) {
+            return [$input[$key]];
+        }
+
+        return $input[$key];
     }
 
     public function getIds1(): array
@@ -31,33 +47,4 @@ class ReadThreeVariableDataByIdRequest
     {
         return $this->ids3;
     }
-
-    private static function parseChainIds(string $chainIds): array
-    {
-        $ids = preg_split('/\|/', $chainIds);
-
-        $ids = array_filter($ids, function($input){
-
-            if (0 == strlen($input)) {
-                return false;
-            }
-
-            if (!is_numeric($input)) {
-                return false;
-            }
-
-            return true;
-        });
-
-        $ids = array_map(function($input){
-
-            return (int) $input;
-
-        }, $ids);
-
-        $ids = array_unique($ids);
-
-        return $ids;
-    }
-
 }
