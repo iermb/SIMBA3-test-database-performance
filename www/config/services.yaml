@@ -148,6 +148,20 @@ services:
             - "@performanceSimba.repository.doctrine.secondVariableDictionary"
             - "@performanceSimba.repository.doctrine.thirdVariableDictionary"
 
+    performanceSimba.useCase.emptyDatabase:
+        class: App\PerformanceSimba\Application\DataDictionary\UseCase\EmptyDatabaseUseCase
+        arguments:
+            - "@performanceSimba.repository.doctrine.oneVariableData"
+            - "@performanceSimba.repository.doctrine.threeVariableData"
+            - "@performanceSimba.repository.doctrine.firstVariableDictionary"
+            - "@performanceSimba.repository.doctrine.secondVariableDictionary"
+            - "@performanceSimba.repository.doctrine.thirdVariableDictionary"
+            - "@performanceSimba.repository.doctrine.oneVariableDataJoined"
+            - "@performanceSimba.repository.doctrine.threeVariableDataJoined"
+            - "@performanceSimba.repository.doctrine.firstVariableDictionaryJoined"
+            - "@performanceSimba.repository.doctrine.secondVariableDictionaryJoined"
+            - "@performanceSimba.repository.doctrine.thirdVariableDictionaryJoined"
+
     App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataJoinedWithNamesController:
         tags: [ controller.service_arguments ]
         arguments:
@@ -162,6 +176,11 @@ services:
         tags: [ controller.service_arguments ]
         arguments:
             - "@performanceSimba.useCase.readThreeVariableDataByIdWithNames"
+
+    App\PerformanceSimba\Infrastructure\Controller\EmptyDatabaseController:
+        tags: [ controller.service_arguments ]
+        arguments:
+            - "@performanceSimba.useCase.emptyDatabase"
 
     performanceSimba.repository.metadata.firstVariableDictionaryJoined:
         class: Doctrine\ORM\Mapping\ClassMetadata

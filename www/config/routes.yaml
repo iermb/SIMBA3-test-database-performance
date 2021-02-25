@@ -65,3 +65,8 @@ api_evaluate_one_variabl_joined:
   methods: GET
   requirements:
     numberOfAttempts: '\d+'
+
+api_empty_database:
+  path: /api/emptyDatabase/
+  controller: App\PerformanceSimba\Infrastructure\Controller\EmptyDatabaseController:execute
+  methods: GET
