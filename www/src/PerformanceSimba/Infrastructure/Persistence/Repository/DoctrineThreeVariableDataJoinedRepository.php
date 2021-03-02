@@ -62,7 +62,6 @@ class DoctrineThreeVariableDataJoinedRepository extends EntityRepository impleme
     {
         array_map(array($this, "saveElement"), $arrayFirstVariablesDictionaryJoined);
         $this->getEntityManager()->flush();
-        $this->getEntityManager()->clear();
     }
 
     private function saveElement(ThreeVariableDataJoined $threeVariableDataJoined): void

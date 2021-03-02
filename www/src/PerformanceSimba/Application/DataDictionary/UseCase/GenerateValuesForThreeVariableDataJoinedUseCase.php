@@ -35,57 +35,39 @@ class GenerateValuesForThreeVariableDataJoinedUseCase
 
     public function execute(GenerateValuesForThreeVariableDataJoinedRequest $request): void
     {
-        //$this->threeVariableDataJoinedRepository->clean();
-        //$this->firstVariableDictionaryJoinedRepository->clean();
-        //$this->secondVariableDictionaryJoinedRepository->clean();
-        //$this->thirdVariableDictionaryJoinedRepository->clean();
 
-        $startNumberVar = $request->offsetVariable();
-        $endNumberVar = $startNumberVar + $request->numberOfVariables() - 1;
+        $startNumberVar1 = $request->offsetVariable1();
+        $endNumberVar1 = $startNumberVar1 + $request->numberOfVariables1() - 1;
 
-        $arrayFirstVariableDictionaryJoined = array_map(array($this, "generateFirstVariableDictionaryJoined"),
-            range($startNumberVar, $endNumberVar));
+        $startNumberVar2 = $request->offsetVariable2();
+        $endNumberVar2 = $startNumberVar2 + $request->numberOfVariables2() - 1;
 
-        $arraySecondVariableDictionaryJoined = array_map(array($this, "generateSecondVariableDictionaryJoined"),
-            range($startNumberVar, $endNumberVar));
+        $startNumberVar3 = $request->offsetVariable3();
+        $endNumberVar3 = $startNumberVar3 + $request->numberOfVariables3() - 1;
 
-        $arrayThirdVariableDictionaryJoined = array_map(array($this, "generateThirdVariableDictionaryJoined"),
-            range($startNumberVar, $endNumberVar));
+        $arrayVar1 = $this->createListVariableDictionary($startNumberVar1, $endNumberVar1, FirstVariableDictionaryJoined::class);
+        $arrayVar2 = $this->createListVariableDictionary($startNumberVar2, $endNumberVar2, SecondVariableDictionaryJoined::class);
+        $arrayVar3 = $this->createListVariableDictionary($startNumberVar3, $endNumberVar3, ThirdVariableDictionaryJoined::class);
 
-        $this->threeVariableDataJoinedRepository->saveMultiple(
-            array_map(
-                array($this, "generateThreeVariableDataJoined"),
-                $arrayFirstVariableDictionaryJoined,
-                $arraySecondVariableDictionaryJoined,
-                $arrayThirdVariableDictionaryJoined,
-            )
+        $arrayThreeVariable = [];
+
+        foreach ($arrayVar1 as $var1) {
+            foreach ($arrayVar2 as $var2) {
+                foreach ($arrayVar3 as $var3) {
+                    $arrayThreeVariable[] = new ThreeVariableDataJoined($var1, $var2, $var3,rand(0, 1000000) / 100);
+                }
+            }
+        }
+
+        $this->threeVariableDataJoinedRepository->saveMultiple($arrayThreeVariable);
+    }
+
+    private function createListVariableDictionary(int $startNumberVar, int $endNumberVar, string $typeVarDictionary): array {
+        return array_map(
+            function($id) use ($typeVarDictionary) {
+                return new $typeVarDictionary($id, "Test name " . $id);
+            },
+            range($startNumberVar, $endNumberVar)
         );
-    }
-
-    private function generateFirstVariableDictionaryJoined(int $id): FirstVariableDictionaryJoined
-    {
-        return new FirstVariableDictionaryJoined($id, "Test name 1st var " . $id);
-    }
-
-    private function generateSecondVariableDictionaryJoined(int $id): SecondVariableDictionaryJoined
-    {
-        return new SecondVariableDictionaryJoined($id, "Test name 2nd var " . $id);
-    }
-
-    private function generateThirdVariableDictionaryJoined(int $id): ThirdVariableDictionaryJoined
-    {
-        return new ThirdVariableDictionaryJoined($id, "Test name 3rd var " . $id);
-    }
-
-    private function generateThreeVariableDataJoined(
-        FirstVariableDictionaryJoined $firstVariableDictionaryJoined,
-        SecondVariableDictionaryJoined $secondVariableDictionaryJoined,
-        ThirdVariableDictionaryJoined $thirdVariableDictionaryJoined
-    ): ThreeVariableDataJoined {
-        return new ThreeVariableDataJoined(
-            $firstVariableDictionaryJoined,
-            $secondVariableDictionaryJoined,
-            $thirdVariableDictionaryJoined,
-            rand(0, 1000000) / 100);
     }
 }

@@ -17,15 +17,19 @@ api_generate_one_variable_joined:
     numberOfVariables: '\d+'
 
 api_generate_three_variable_joined:
-  path: /api/generateThreeVariableJoined/{offsetVariable}/{numberOfVariables}/
+  path: /api/generateThreeVariableJoined/{offsetVariable1}/{numberOfVariables1}/{offsetVariable2}/{numberOfVariables2}/{offsetVariable3}/{numberOfVariables3}/
   controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForThreeVariableDataJoinedController::execute
   methods: GET
   requirements:
-    offsetVariable: '\d+'
-    numberOfVariables: '\d+'
+    offsetVariable1: '\d+'
+    numberOfVariables1: '\d+'
+    offsetVariable2: '\d+'
+    numberOfVariables2: '\d+'
+    offsetVariable3: '\d+'
+    numberOfVariables3: '\d+'
 
 api_generate_three_variable:
-  path: /api/generateThreeVariable/{offsetVariable}/{numberOfVariables}/
+  path: /api/generateThreeVariable/{offsetVariable1}/{numberOfVariables1}/{offsetVariable2}/{numberOfVariables2}/{offsetVariable3}/{numberOfVariables3}/
   controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForThreeVariableDataController::execute
   methods: GET
   requirements:

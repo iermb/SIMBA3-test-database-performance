@@ -33,55 +33,58 @@ class GenerateValuesForThreeVariableDataUseCase
 
     public function execute(GenerateValuesForThreeVariableDataRequest $request): void
     {
-        $startNumberVar = $request->offsetVariable();
-        $endNumberVar = $startNumberVar + $request->numberOfVariables() - 1;
+        $startNumberVar1 = $request->offsetVariable1();
+        $endNumberVar1 = $startNumberVar1 + $request->numberOfVariables1() - 1;
 
-        $this->generateValuesForThreeVariableData($startNumberVar, $endNumberVar);
-        $this->generateFirstSecondThirdVariableDictionaries($startNumberVar, $endNumberVar);
+        $startNumberVar2 = $request->offsetVariable2();
+        $endNumberVar2 = $startNumberVar2 + $request->numberOfVariables2() - 1;
+
+        $startNumberVar3 = $request->offsetVariable3();
+        $endNumberVar3 = $startNumberVar3 + $request->numberOfVariables3() - 1;
+
+        $this->generateValuesForThreeVariableData(
+            $startNumberVar1,
+            $endNumberVar1,
+            $startNumberVar2,
+            $endNumberVar2,
+            $startNumberVar3,
+            $endNumberVar3
+        );
+
+        $this->generateVariableDictionaries($startNumberVar1, $endNumberVar1, $this->firstVariableDictionaryRepository, FirstVariableDictionary::class);
+        $this->generateVariableDictionaries($startNumberVar2, $endNumberVar2, $this->secondVariableDictionaryRepository, SecondVariableDictionary::class);
+        $this->generateVariableDictionaries($startNumberVar3, $endNumberVar3, $this->thirdVariableDictionaryRepository, ThirdVariableDictionary::class);
     }
 
-    private function generateValuesForThreeVariableData(int $startNumberVar, int $endNumberVar): void
+    private function generateValuesForThreeVariableData(
+        int $startNumberVar1,
+        int $endNumberVar1,
+        int $startNumberVar2,
+        int $endNumberVar2,
+        int $startNumberVar3,
+        int $endNumberVar3
+    ): void
     {
-        $this->threeVariableDataRepository->saveMultiple(array_map(array($this, "generateThreeVariableData"),
-            range($startNumberVar, $endNumberVar)));
+        $listThreeVariableData = [];
+
+        for ($var1 = $startNumberVar1; $var1 <= $endNumberVar1; $var1++) {
+            for ($var2 = $startNumberVar2; $var2 <= $endNumberVar2; $var2++) {
+                for ($var3 = $startNumberVar3; $var3 <= $endNumberVar3; $var3++) {
+                    $listThreeVariableData[] = new ThreeVariableData($var1, $var2, $var3, rand(0, 1000000) / 100);
+                }
+            }
+        }
+        $this->threeVariableDataRepository->saveMultiple($listThreeVariableData);
     }
 
-    private function generateFirstSecondThirdVariableDictionaries(int $startNumberVar, int $endNumberVar): void
+    private function generateVariableDictionaries(int $startNumber, int $endNumber, object $repository, string $object): void
     {
-        $this->firstVariableDictionaryRepository->saveMultiple(array_map(
-            array($this, "generateFirstVariableDictionary"),
-            range($startNumberVar, $endNumberVar)
-        ));
+        $arrayDictionaries = [];
 
-        $this->secondVariableDictionaryRepository->saveMultiple(array_map(
-            array($this, "generateSecondVariableDictionary"),
-            range($startNumberVar, $endNumberVar)
-        ));
+        for($i = $startNumber; $i <= $endNumber; $i++) {
+            $arrayDictionaries[] = new $object($i, "Test name " . $i);
+        }
 
-        $this->thirdVariableDictionaryRepository->saveMultiple(array_map(
-            array($this, "generateThirdVariableDictionary"),
-            range($startNumberVar, $endNumberVar)
-        ));
+        $repository->saveMultiple($arrayDictionaries);
     }
-
-    private function generateFirstVariableDictionary(int $id): FirstVariableDictionary
-    {
-        return new FirstVariableDictionary($id, "Test name " . $id);
-    }
-
-    private function generateSecondVariableDictionary(int $id): SecondVariableDictionary
-    {
-        return new SecondVariableDictionary($id, "Test name " . $id);
-    }
-
-    private function generateThirdVariableDictionary(int $id): ThirdVariableDictionary
-    {
-        return new ThirdVariableDictionary($id, "Test name " . $id);
-    }
-
-    private function generateThreeVariableData(int $id): ThreeVariableData
-    {
-        return new ThreeVariableData($id, $id, $id, rand(0, 1000000) / 100);
-    }
-
 }

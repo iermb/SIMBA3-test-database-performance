@@ -18,10 +18,24 @@ class GenerateValuesForThreeVariableDataController
         $this->generateValuesForThreeVariableDataUseCase = $generateValuesForThreeVariableDataUseCase;
     }
 
-    public function execute(int $offsetVariable, int $numberOfVariables): Response
+    public function execute(
+        int $offsetVariable1,
+        int $numberOfVariables1,
+        int $offsetVariable2,
+        int $numberOfVariables2,
+        int $offsetVariable3,
+        int $numberOfVariables3
+    ): Response
     {
         $this->generateValuesForThreeVariableDataUseCase->execute(
-            new GenerateValuesForThreeVariableDataRequest($offsetVariable, $numberOfVariables)
+            new GenerateValuesForThreeVariableDataRequest(
+                $offsetVariable1,
+                $numberOfVariables1,
+                $offsetVariable2,
+                $numberOfVariables2,
+                $offsetVariable3,
+                $numberOfVariables3
+            )
         );
         return new Response("Data saved", Response::HTTP_OK);
     }
