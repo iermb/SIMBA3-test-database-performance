@@ -6,6 +6,7 @@ namespace App\PerformanceSimba\Infrastructure\Controller;
 
 use App\PerformanceSimba\Application\DataDictionary\Request\ReadThreeVariableDataJoinedByIdRequest;
 use App\PerformanceSimba\Application\DataDictionary\UseCase\ReadThreeVariableDataJoinedByIdWithNamesUseCase;
+use App\PerformanceSimba\Application\DataDictionary\Service\arrayUtility;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +29,14 @@ class ReadThreeVariableDataJoinedByIdWithNamesController
     {
         $dataRequest = json_decode($jsonRequest, true);
 
+        $ids1 = arrayUtility::parseAssociativeArray($dataRequest, self::FIELD_HEADER_VARS_1);
+        $ids2 = arrayUtility::parseAssociativeArray($dataRequest, self::FIELD_HEADER_VARS_2);
+        $ids3 = arrayUtility::parseAssociativeArray($dataRequest, self::FIELD_HEADER_VARS_3);
+
         $startTime = microtime(1);
 
         $response = $this->readThreeVariableDataJoinedByIdWithNamesUseCase->execute(
-            new ReadThreeVariableDataJoinedByIdRequest( $dataRequest )
+            new ReadThreeVariableDataJoinedByIdRequest( $ids1, $ids2, $ids3 )
         );
 
         $duration = microtime(1) - $startTime;

@@ -64,24 +64,36 @@ api_evaluate_one_variable:
     numberOfAttempts: '\d+'
 
 api_evaluate_three_variable_by_id:
-  path: /api/evaluate/three-variable/{numberOfAttempts}/{numberOfRegisters}/{idMinimum}/{idMaximum}
+  path: /api/evaluate/three-variable/{numberOfAttempts}/{numberOfRegisters1}/{idMinimum1}/{idMaximum1}/{numberOfRegisters2}/{idMinimum2}/{idMaximum2}/{numberOfRegisters3}/{idMinimum3}/{idMaximum3}
   controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadThreeVariableDataByIdController:execute
   methods: GET
   requirements:
     numberOfAttempts: '\d+'
-    numberOfRegisters: '\d+'
-    idMinimum: '\d+'
-    idMaximum: '\d+'
+    numberOfRegisters1: '\d+'
+    idMinimum1: '\d+'
+    idMaximum1: '\d+'
+    numberOfRegisters2: '\d+'
+    idMinimum2: '\d+'
+    idMaximum2: '\d+'
+    numberOfRegisters3: '\d+'
+    idMinimum3: '\d+'
+    idMaximum3: '\d+'
 
 api_evaluate_three_variable_joined_by_id:
-  path: /api/evaluate/three-variable-joined/{numberOfAttempts}/{numberOfRegisters}/{idMinimum}/{idMaximum}
+  path: /api/evaluate/three-variable-joined/{numberOfAttempts}/{numberOfRegisters1}/{idMinimum1}/{idMaximum1}/{numberOfRegisters2}/{idMinimum2}/{idMaximum2}/{numberOfRegisters3}/{idMinimum3}/{idMaximum3}
   controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadThreeVariableDataJoinedByIdController:execute
   methods: GET
   requirements:
     numberOfAttempts: '\d+'
-    numberOfRegisters: '\d+'
-    idMinimum: '\d+'
-    idMaximum: '\d+'
+    numberOfRegisters1: '\d+'
+    idMinimum1: '\d+'
+    idMaximum1: '\d+'
+    numberOfRegisters2: '\d+'
+    idMinimum2: '\d+'
+    idMaximum2: '\d+'
+    numberOfRegisters3: '\d+'
+    idMinimum3: '\d+'
+    idMaximum3: '\d+'
 
 api_evaluate_one_variabl_joined:
   path: /api/evaluate/one-variable-joined/{numberOfAttempts}/

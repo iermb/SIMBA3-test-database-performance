@@ -10,27 +10,11 @@ class ReadThreeVariableDataJoinedByIdRequest
     private array $ids2;
     private array $ids3;
 
-    private const FIELD_HEADER_VARS_1 = 'ids_1';
-    private const FIELD_HEADER_VARS_2 = 'ids_2';
-    private const FIELD_HEADER_VARS_3 = 'ids_3';
-
-    public function __construct(array $idsRequest )
+    public function __construct(array $ids1, array $ids2, array $ids3 )
     {
-        $this->ids1 = self::parseAssociativeArray($idsRequest, self::FIELD_HEADER_VARS_1);
-        $this->ids2 = self::parseAssociativeArray($idsRequest, self::FIELD_HEADER_VARS_2);
-        $this->ids3 = self::parseAssociativeArray($idsRequest, self::FIELD_HEADER_VARS_3);
-    }
-
-    private static function parseAssociativeArray(array $input, string $key): array {
-        if (!isset($input[$key])) {
-            return [];
-        }
-
-        if (!is_array($input[$key])) {
-            return [$input[$key]];
-        }
-
-        return $input[$key];
+        $this->ids1 = $ids1;
+        $this->ids2 = $ids2;
+        $this->ids3 = $ids3;
     }
 
     public function getIds1(): array

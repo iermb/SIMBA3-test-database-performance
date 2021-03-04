@@ -4,6 +4,7 @@
 namespace App\PerformanceSimba\Application\DataDictionary\Response;
 
 
+use App\PerformanceSimba\Application\DataDictionary\Service\arrayUtility;
 use App\PerformanceSimba\Domain\DataDictionary\Entity\ThreeVariableDataJoined;
 
 class ReadThreeVariableDataJoinedByIdWithNamesResponse
@@ -19,6 +20,10 @@ class ReadThreeVariableDataJoinedByIdWithNamesResponse
 
     private array $listThreeVariableDataJoined;
 
+    private array $uniqueFirstVariableDictionary = [];
+    private array $uniqueSecondVariableDictionary = [];
+    private array $uniqueThirdVariableDictionary = [];
+
     public function __construct(array $listThreeVariableDataJoined)
     {
         $this->listThreeVariableDataJoined = $listThreeVariableDataJoined;
@@ -26,18 +31,19 @@ class ReadThreeVariableDataJoinedByIdWithNamesResponse
 
     public function threeVariableDataJoinedByIdWithNamesAsArray(): array
     {
+
         return [
-            self::VARIABLE_NAME_FIELD_1 => array_map(
+            self::VARIABLE_NAME_FIELD_1 => arrayUtility::getUniqueArray(array_map(
                 array($this, "firstVariableDictionaryAsArray"),
-                $this->listThreeVariableDataJoined
+                $this->listThreeVariableDataJoined)
             ),
-            self::VARIABLE_NAME_FIELD_2 => array_map(
+            self::VARIABLE_NAME_FIELD_2 => arrayUtility::getUniqueArray(array_map(
                 array($this, "secondVariableDictionaryAsArray"),
-                $this->listThreeVariableDataJoined
+                $this->listThreeVariableDataJoined)
             ),
-            self::VARIABLE_NAME_FIELD_3 => array_map(
+            self::VARIABLE_NAME_FIELD_3 => arrayUtility::getUniqueArray(array_map(
                 array($this, "thirdVariableDictionaryAsArray"),
-                $this->listThreeVariableDataJoined
+                $this->listThreeVariableDataJoined)
             ),
             self::VALUES_DATA_FIELD => array_map(
                 array($this, "threeVariableDataAsArray"),
@@ -46,27 +52,27 @@ class ReadThreeVariableDataJoinedByIdWithNamesResponse
         ];
     }
 
-    private function firstVariableDictionaryAsArray(ThreeVariableDataJoined $ThreeVariableDataJoined): array
+    private function firstVariableDictionaryAsArray(ThreeVariableDataJoined $threeVariableDataJoined): array
     {
         return [
-            self::ID_VARIABLE_FIELD_1 => $ThreeVariableDataJoined->firstVariableDictionaryJoined()->id(),
-            self::NAME_VARIABLE_FIELD => $ThreeVariableDataJoined->firstVariableDictionaryJoined()->name()
+            self::ID_VARIABLE_FIELD_1 => $threeVariableDataJoined->firstVariableDictionaryJoined()->id(),
+            self::NAME_VARIABLE_FIELD => $threeVariableDataJoined->firstVariableDictionaryJoined()->name()
         ];
     }
 
-    private function secondVariableDictionaryAsArray(ThreeVariableDataJoined $ThreeVariableDataJoined): array
+    private function secondVariableDictionaryAsArray(ThreeVariableDataJoined $threeVariableDataJoined): array
     {
         return [
-            self::ID_VARIABLE_FIELD_2 => $ThreeVariableDataJoined->secondVariableDictionaryJoined()->id(),
-            self::NAME_VARIABLE_FIELD => $ThreeVariableDataJoined->secondVariableDictionaryJoined()->name()
+            self::ID_VARIABLE_FIELD_2 => $threeVariableDataJoined->secondVariableDictionaryJoined()->id(),
+            self::NAME_VARIABLE_FIELD => $threeVariableDataJoined->secondVariableDictionaryJoined()->name()
         ];
     }
 
-    private function thirdVariableDictionaryAsArray(ThreeVariableDataJoined $ThreeVariableDataJoined): array
+    private function thirdVariableDictionaryAsArray(ThreeVariableDataJoined $threeVariableDataJoined): array
     {
         return [
-            self::ID_VARIABLE_FIELD_3 => $ThreeVariableDataJoined->thirdVariableDictionaryJoined()->id(),
-            self::NAME_VARIABLE_FIELD => $ThreeVariableDataJoined->thirdVariableDictionaryJoined()->name()
+            self::ID_VARIABLE_FIELD_3 => $threeVariableDataJoined->thirdVariableDictionaryJoined()->id(),
+            self::NAME_VARIABLE_FIELD => $threeVariableDataJoined->thirdVariableDictionaryJoined()->name()
         ];
     }
 
