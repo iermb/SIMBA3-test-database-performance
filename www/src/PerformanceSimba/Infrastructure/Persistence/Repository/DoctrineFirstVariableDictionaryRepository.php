@@ -12,6 +12,13 @@ class DoctrineFirstVariableDictionaryRepository extends EntityRepository impleme
 {
     private const BATCH_SIZE = 200;
 
+    public function firstVariableDictionaryByIds(array $ids): array
+    {
+        return $this->findBy([
+            'id' => $ids,
+        ]);
+    }
+
     public function save(FirstVariableDictionary $firstVariableDictionary): void
     {
         $this->getEntityManager()->persist($firstVariableDictionary);

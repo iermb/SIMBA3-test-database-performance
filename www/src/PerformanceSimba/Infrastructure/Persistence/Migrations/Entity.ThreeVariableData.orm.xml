@@ -1,0 +1,13 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\PerformanceSimba\Domain\DataDictionary\Entity\ThreeVariableData" table="three_variable_data">
+        <id name="variableFirstId" column="variable_first_id" type="integer" />
+        <id name="variableSecondId" column="variable_second_id" type="integer" />
+        <id name="variableThirdId" column="variable_third_id" type="integer" />
+        <field name="value" column="value" type="decimal" scale="3" precision="10" />
+    </entity>
+
+</doctrine-mapping>

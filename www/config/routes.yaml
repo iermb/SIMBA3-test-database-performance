@@ -7,14 +7,34 @@ api_generate_one_variable:
   controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataController::execute
   methods: GET
   requirements:
-    indicatorId: '\d+'
+    numberOfVariables: '\d+'
 
 api_generate_one_variable_joined:
   path: /api/generateOneVariableJoined/{numberOfVariables}/
   controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForOneVariableDataJoinedController::execute
   methods: GET
   requirements:
-    indicatorId: '\d+'
+    numberOfVariables: '\d+'
+
+api_generate_three_variable_joined:
+  path: /api/generateThreeVariableJoined/{offsetVariable1}/{numberOfVariables1}/{offsetVariable2}/{numberOfVariables2}/{offsetVariable3}/{numberOfVariables3}/
+  controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForThreeVariableDataJoinedController::execute
+  methods: GET
+  requirements:
+    offsetVariable1: '\d+'
+    numberOfVariables1: '\d+'
+    offsetVariable2: '\d+'
+    numberOfVariables2: '\d+'
+    offsetVariable3: '\d+'
+    numberOfVariables3: '\d+'
+
+api_generate_three_variable:
+  path: /api/generateThreeVariable/{offsetVariable1}/{numberOfVariables1}/{offsetVariable2}/{numberOfVariables2}/{offsetVariable3}/{numberOfVariables3}/
+  controller: App\PerformanceSimba\Infrastructure\Controller\GenerateValuesForThreeVariableDataController::execute
+  methods: GET
+  requirements:
+    offsetVariable: '\d+'
+    numberOfVariables: '\d+'
 
 api_read_all_one_variable:
   path: /api/readOneVariable/
@@ -26,12 +46,63 @@ api_read_all_one_variable_joined:
   controller: App\PerformanceSimba\Infrastructure\Controller\ReadAllOneVariableDataJoinedWithNamesController::execute
   methods: GET
 
+api_read_three_variable_joined_by_id:
+  path: /api/readThreeVariableJoinedById/{jsonRequest}
+  controller: App\PerformanceSimba\Infrastructure\Controller\ReadThreeVariableDataJoinedByIdWithNamesController::execute
+  methods: GET
+
+api_read_three_variable_by_id:
+  path: /api/readThreeVariableById/{jsonRequest}
+  controller: App\PerformanceSimba\Infrastructure\Controller\ReadThreeVariableDataByIdWithNamesController::execute
+  methods: GET
+
 api_evaluate_one_variable:
   path: /api/evaluate/one-variable/{numberOfAttempts}/
   controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadOneVariableDataController:execute
   methods: GET
+  requirements:
+    numberOfAttempts: '\d+'
+
+api_evaluate_three_variable_by_id:
+  path: /api/evaluate/three-variable/{numberOfAttempts}/{numberOfRegisters1}/{idMinimum1}/{idMaximum1}/{numberOfRegisters2}/{idMinimum2}/{idMaximum2}/{numberOfRegisters3}/{idMinimum3}/{idMaximum3}
+  controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadThreeVariableDataByIdController:execute
+  methods: GET
+  requirements:
+    numberOfAttempts: '\d+'
+    numberOfRegisters1: '\d+'
+    idMinimum1: '\d+'
+    idMaximum1: '\d+'
+    numberOfRegisters2: '\d+'
+    idMinimum2: '\d+'
+    idMaximum2: '\d+'
+    numberOfRegisters3: '\d+'
+    idMinimum3: '\d+'
+    idMaximum3: '\d+'
+
+api_evaluate_three_variable_joined_by_id:
+  path: /api/evaluate/three-variable-joined/{numberOfAttempts}/{numberOfRegisters1}/{idMinimum1}/{idMaximum1}/{numberOfRegisters2}/{idMinimum2}/{idMaximum2}/{numberOfRegisters3}/{idMinimum3}/{idMaximum3}
+  controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadThreeVariableDataJoinedByIdController:execute
+  methods: GET
+  requirements:
+    numberOfAttempts: '\d+'
+    numberOfRegisters1: '\d+'
+    idMinimum1: '\d+'
+    idMaximum1: '\d+'
+    numberOfRegisters2: '\d+'
+    idMinimum2: '\d+'
+    idMaximum2: '\d+'
+    numberOfRegisters3: '\d+'
+    idMinimum3: '\d+'
+    idMaximum3: '\d+'
 
 api_evaluate_one_variabl_joined:
   path: /api/evaluate/one-variable-joined/{numberOfAttempts}/
   controller: App\PerformanceSimba\Infrastructure\Controller\EvaluateReadOneVariableDataJoinedController:execute
+  methods: GET
+  requirements:
+    numberOfAttempts: '\d+'
+
+api_empty_database:
+  path: /api/emptyDatabase/
+  controller: App\PerformanceSimba\Infrastructure\Controller\EmptyDatabaseController:execute
   methods: GET
