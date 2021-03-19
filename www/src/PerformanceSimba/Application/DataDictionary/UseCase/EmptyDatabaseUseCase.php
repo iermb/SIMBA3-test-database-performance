@@ -61,8 +61,8 @@ class EmptyDatabaseUseCase
         $this->secondVariableDictionaryRepository->clean();
         $this->thirdVariableDictionaryRepository->clean();
 
-        $this->oneVariableDataJoinedRepository->clean();
         $this->threeVariableDataJoinedRepository->clean();
+        $this->oneVariableDataJoinedRepository->clean();
         $this->firstVariableDictionaryJoinedRepository->clean();
         $this->secondVariableDictionaryJoinedRepository->clean();
         $this->thirdVariableDictionaryJoinedRepository->clean();

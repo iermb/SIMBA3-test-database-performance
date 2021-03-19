@@ -49,17 +49,24 @@ class GenerateValuesForThreeVariableDataJoinedUseCase
         $arrayVar2 = $this->createListVariableDictionary($startNumberVar2, $endNumberVar2, SecondVariableDictionaryJoined::class);
         $arrayVar3 = $this->createListVariableDictionary($startNumberVar3, $endNumberVar3, ThirdVariableDictionaryJoined::class);
 
+        $this->firstVariableDictionaryJoinedRepository->saveMultiple($arrayVar1);
+        $this->secondVariableDictionaryJoinedRepository->saveMultiple($arrayVar2);
+        $this->thirdVariableDictionaryJoinedRepository->saveMultiple($arrayVar3);
+
         $arrayThreeVariable = [];
 
         foreach ($arrayVar1 as $var1) {
             foreach ($arrayVar2 as $var2) {
                 foreach ($arrayVar3 as $var3) {
+                    //$this->threeVariableDataJoinedRepository->save(new ThreeVariableDataJoined($var1, $var2, $var3, rand(0, 1000000) / 100));
                     $arrayThreeVariable[] = new ThreeVariableDataJoined($var1, $var2, $var3,rand(0, 1000000) / 100);
                 }
             }
+            $this->threeVariableDataJoinedRepository->saveMultiple($arrayThreeVariable);
+            $arrayThreeVariable = [];
         }
 
-        $this->threeVariableDataJoinedRepository->saveMultiple($arrayThreeVariable);
+        //$this->threeVariableDataJoinedRepository->saveMultiple($arrayThreeVariable);
     }
 
     private function createListVariableDictionary(int $startNumberVar, int $endNumberVar, string $typeVarDictionary): array {
